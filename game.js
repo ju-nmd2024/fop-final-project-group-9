@@ -1,3 +1,5 @@
+//import Interior from "./interior.js";
+
 const gridLength = 20;
 const gridHeight = 12;
 const gridSize = 50;
@@ -18,19 +20,7 @@ function drawGrid() {
   pop();
 }
 
-
-
-class GameState {
-  constructor(state) {}
-}
-
-class Graphics {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-}
-
+/*
 let sofa;
 let carpet;
 
@@ -43,40 +33,64 @@ function gameScreen() {
   image(sofa, 0, 100);
   image(carpet, 200, 500);
 }
-
-/*function startScreen() {
-  //background(255, 227, 228);
-  push();
-
-  fill(40, 108, 173);
-  strokeWeight(5);
-  stroke(30, 72, 112);
-  rect(400, 250, 200, 100);
-  rect(430, 480, 140, 50);
-
-  noStroke();
-  textFont("Consolas");
-  fill(30, 72, 112);
-  textSize(35);
-  textStyle(BOLD);
-  textAlign(CENTER, CENTER);
-  textSize(32);
-  text("Chef's Frenzy", 250, 170, 500);
-
-  fill(255);
-  text("START", 400, 300, 200);
-  textSize(22);
-  text("RULES", 430, 505, 140);
-
-  fill(16, 45, 74);
-  textSize(12);
-  text("producers: arina & julia", 400, 550, 200);
-  pop();
-}
 */
+
+class Button {
+  constructor(x, y, width, height, text) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.text = text;
+  }
+  draw() {
+    push();
+    translate(this.x, this.y);
+    fill(40, 108, 173);
+    strokeWeight(5);
+    stroke(30, 72, 112);
+    rect(0, 0, this.width, this.height);
+
+    noStroke();
+    fill(255);
+    textFont("Consolas");
+    textStyle(BOLD);
+    textSize(this.height / 2);
+    textAlign(CENTER);
+    text(this.text, 0, this.height / 4, this.width);
+    pop();
+  }
+  hitTest(x, y) {
+    return (
+      x > this.x &&
+      x < this.x + this.width &&
+      y > this.y &&
+      y < this.y + this.height
+    );
+  }
+}
+
+const myButton = new Button(375, 200, 250, 100, "START");
+const rulesButton = new Button(425, 450, 150, 70, "Rules");
+
+let state = "start";
 
 function draw() {
   gameScreen();
   background(204, 230, 255, 200);
   drawGrid();
+
+  if (mouseIsPressed) {
+    if (myButton.hitTest(mouseX, mouseY)) {
+      state = "game";
+    } else if (rulesButton.hitTest(mouseX, mouseY)) {
+      state = "rules";
+    }
+  }
+
+  myButton.draw();
+  rulesButton.draw();
+
+  if (state === "game") {
+  }
 }
