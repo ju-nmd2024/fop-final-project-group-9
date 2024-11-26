@@ -1,6 +1,24 @@
+const gridLength = 20;
+const gridHeight = 12;
+const gridSize = 50;
+
 function setup() {
   createCanvas(1000, 600);
 }
+
+function drawGrid() {
+  push();
+  stroke(255, 255, 255);
+  noFill();
+  for (let x = 0; x < gridLength; x++) {
+    for (let y = 0; y < gridHeight; y++) {
+      rect(x * gridSize, y * gridSize, gridSize, gridSize);
+    }
+  }
+  pop();
+}
+
+
 
 class GameState {
   constructor(state) {}
@@ -26,7 +44,7 @@ function gameScreen() {
   image(carpet, 200, 500);
 }
 
-function startScreen() {
+/*function startScreen() {
   //background(255, 227, 228);
   push();
 
@@ -55,9 +73,10 @@ function startScreen() {
   text("producers: arina & julia", 400, 550, 200);
   pop();
 }
+*/
 
 function draw() {
   gameScreen();
   background(204, 230, 255, 200);
-  startScreen();
+  drawGrid();
 }
