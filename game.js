@@ -1,4 +1,4 @@
-//import Interior from "./interior.js";
+import Interior from "./interior.js";
 
 const gridLength = 20;
 const gridHeight = 12;
@@ -19,21 +19,6 @@ function drawGrid() {
   }
   pop();
 }
-
-/*
-let sofa;
-let carpet;
-
-function preload() {
-  sofa = loadImage("/graphics/big-sofa.png");
-  carpet = loadImage("/graphics/carpet-05.png");
-}
-
-function gameScreen() {
-  image(sofa, 0, 100);
-  image(carpet, 200, 500);
-}
-*/
 
 class Button {
   constructor(x, y, width, height, text) {
@@ -73,10 +58,11 @@ class Button {
 const myButton = new Button(375, 200, 250, 100, "START");
 const rulesButton = new Button(425, 450, 150, 70, "Rules");
 
+const newInterior = new Interior(0, 0);
+
 let state = "start";
 
 function draw() {
-  gameScreen();
   background(204, 230, 255, 200);
   drawGrid();
 
@@ -92,5 +78,6 @@ function draw() {
   rulesButton.draw();
 
   if (state === "game") {
+    newInterior.draw();
   }
 }
