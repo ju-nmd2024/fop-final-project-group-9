@@ -1,5 +1,7 @@
 import Interior from "./interior.js";
 
+const newInterior = new Interior(0, 0);
+
 const gridLength = 25;
 const gridHeight = 13;
 const gridSize = 50;
@@ -7,6 +9,8 @@ const gridSize = 50;
 function setup() {
   createCanvas(1250, 650);
 }
+
+window.setup = setup;
 
 function drawGrid() {
   push();
@@ -55,10 +59,8 @@ class Button {
   }
 }
 
-const myButton = new Button(375, 200, 250, 100, "START");
-const rulesButton = new Button(425, 450, 150, 70, "Rules");
-
-const newInterior = new Interior(0, 0);
+const myButton = new Button(500, 200, 250, 100, "START");
+const rulesButton = new Button(550, 450, 150, 70, "Rules");
 
 let state = "start";
 
@@ -66,18 +68,21 @@ function draw() {
   background(204, 230, 255, 200);
   drawGrid();
 
-  if (mouseIsPressed) {
-    if (myButton.hitTest(mouseX, mouseY)) {
-      state = "game";
-    } else if (rulesButton.hitTest(mouseX, mouseY)) {
-      state = "rules";
+  if (state === "start") {
+    if (mouseIsPressed) {
+      if (myButton.hitTest(mouseX, mouseY)) {
+        state = "game";
+      } else if (rulesButton.hitTest(mouseX, mouseY)) {
+        state = "rules";
+      }
     }
-  }
 
-  myButton.draw();
-  rulesButton.draw();
-
-  if (state === "game") {
+    myButton.draw();
+    rulesButton.draw();
+  } else if (state === "game") {
     newInterior.draw();
+  } else if (state === "rules") {
   }
 }
+
+window.draw = draw;
