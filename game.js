@@ -1,4 +1,4 @@
-//import Interior from "./interior.js";
+import Interior from "./interior.js";
 
 const gridLength = 25;
 const gridHeight = 13;

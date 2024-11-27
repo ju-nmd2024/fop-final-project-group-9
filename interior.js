@@ -15,6 +15,13 @@ function preload() {
   carpet = loadImage("/graphics/carpet-05.png");
   fireplace = loadImage("/graphics/fireplace-04.png");
   fridge = loadImage("/graphics/fridge-12.png");
+  stove = loadImage("/graphics/stove-13.png");
+  lamp = loadImage("/graphics/lamp.png");
+  lampFront = loadImage("/graphics/lamp2.png");
+  table = loadImage("/graphics/table.png");
+  smallSofaUp = loadImage("/graphics/small-sofa(up)-02.png");
+  smallSofaDown = loadImage("/graphics/small-sofa(down)-03.png");
+  plant = loadImage("/graphics/plant.png");
 
 }
 function drawGrid() {
@@ -45,14 +52,31 @@ class Interior {
     fill(200, 100, 100);
     rect(0, 0, 1250, 150);
     fill(0);
-    rect(750, 0, 20, 430);
+    rect(750, 0, 50, 430);
     fill(0);
     image(fireplace, 200, 0);
-    image(sofa, -30, 110);
-    image(carpet, 150, 520);
+    image(sofa, -30, 200);
+    image(carpet, 193, 540);
     image(fridge, 625, 0);
+    image(stove, 973, 0);
+    image(lamp, 250, 448);
+    image(lamp, 50, 445);
+    image(lampFront, 4, -171);
+    image(lampFront, 345, -171);
+    image(smallSofaDown, 404, 368);
+    image(smallSofaUp, 400, 197);
+    image(plant, -10, 10);
+    image(plant, 280, 10);
+    image(table, 306, 125);
+    image(table, 5, 125);
+    image(smallSofaDown, 600, 368);
+    image(smallSofaUp, 596, 197);
+    image(table, 505, 125);
     fireplace.resize(200, 0);
-    sofa.resize(200,0);
+    sofa.resize(200, 0);
+    smallSofaUp.resize(110, 0);
+    smallSofaDown.resize(100, 0);
+    table.resize(280, 0);
     pop();
   }
 }
@@ -60,7 +84,6 @@ class Interior {
 const interior = new Interior(0, 0);
 
 function draw() {
-  background(245, 78, 132);
   interior.draw();
   drawGrid();
 }
