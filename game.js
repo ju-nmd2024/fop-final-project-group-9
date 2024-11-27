@@ -1,11 +1,11 @@
-import Interior from "./interior.js";
+//import Interior from "./interior.js";
 
-const gridLength = 20;
-const gridHeight = 12;
+const gridLength = 25;
+const gridHeight = 13;
 const gridSize = 50;
 
 function setup() {
-  createCanvas(1000, 600);
+  createCanvas(1250, 650);
 }
 
 function drawGrid() {
