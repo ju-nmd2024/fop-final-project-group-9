@@ -26,11 +26,14 @@ function preload() {
   characterBack = loadImage("/character/character-back.png");
   characterBackLF = loadImage("/character/character-back move (2).png");
   characterBackRF = loadImage("/character/character-back move.png");
-  characterSideRightLF = loadImage("/character/character-rightside-leftleg.png");
-  characterSideRightRF = loadImage("/character/character-rightside-rightleg.png");
+  characterSideRightLF = loadImage(
+    "/character/character-rightside-leftleg.png"
+  );
+  characterSideRightRF = loadImage(
+    "/character/character-rightside-rightleg.png"
+  );
   characterSideLeftLF = loadImage("/character/character-leftside-leftleg.png");
   characterSideLeftRF = loadImage("/character/character-leftside-rightleg.png");
-
 }
 
 function draw() {
@@ -60,34 +63,38 @@ function draw() {
     x = x + 1;
     checkIfUp = 1;
     checkIfDown = 0;
-  } else if (checkIfUp === 1 && keyIsDown(39) === false && keyIsDown(37) === false) {
+  } else if (
+    checkIfUp === 1 &&
+    keyIsDown(39) === false &&
+    keyIsDown(37) === false
+  ) {
     image(characterBack, characterX, characterY);
-  } else if (checkIfDown === 1 && keyIsDown(39) === false && keyIsDown(37) === false) {
+  } else if (
+    checkIfDown === 1 &&
+    keyIsDown(39) === false &&
+    keyIsDown(37) === false
+  ) {
     image(characterFront, characterX, characterY);
   }
 
-  if (keyIsDown(39) && x <= 5) {
-    image(characterSideRightLF, characterX, characterY);
-    x = x + 1;
-    characterX = characterX + 2;
- 
-  } else if (keyIsDown(39) && x <= 10 && x > 5) {
-    image(characterSideRightRF, characterX, characterY);
-    characterX = characterX + 2;
-    x = x + 1;
-
-  } else if (keyIsDown(37) && x <= 5) {
-    image(characterSideLeftRF, characterX, characterY);
-    x = x + 1;
-    characterX = characterX - 2;
-
-  } else if (keyIsDown(37) && x <= 10 && x > 5) {
-    image(characterSideLeftLF, characterX, characterY);
-    characterX = characterX - 2;
-    x = x + 1;
-
-    
-
+  if (keyIsDown(38) === false && keyIsDown(40) === false) {
+    if (keyIsDown(39) && x <= 5) {
+      image(characterSideRightLF, characterX, characterY);
+      x = x + 1;
+      characterX = characterX + 2;
+    } else if (keyIsDown(39) && x <= 10 && x > 5) {
+      image(characterSideRightRF, characterX, characterY);
+      characterX = characterX + 2;
+      x = x + 1;
+    } else if (keyIsDown(37) && x <= 5) {
+      image(characterSideLeftRF, characterX, characterY);
+      x = x + 1;
+      characterX = characterX - 2;
+    } else if (keyIsDown(37) && x <= 10 && x > 5) {
+      image(characterSideLeftLF, characterX, characterY);
+      characterX = characterX - 2;
+      x = x + 1;
+    }
   }
 
   if (x === 10) {
