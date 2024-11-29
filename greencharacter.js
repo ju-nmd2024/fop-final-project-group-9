@@ -16,6 +16,8 @@ function preload() {
   greenCharacterBackRF = loadImage(
     "/green character/character-back-rightleg.png"
   );
+  greencharacterRightSideLF = loadImage("/green character/greencharacter-rightside-leftleg.png");
+  greencharacterRightSideLF = loadImage("/green character/greencharacter-rightside-rightleg.png");
 }
 
 function draw() {
@@ -24,10 +26,21 @@ function draw() {
   if (greenCharacterY >= 200) {
     image(greenCharacterBack, greenCharacterX, greenCharacterY);
     greenCharacterY = greenCharacterY - 2;
-  } else if (greenCharacterY < 200 && greenCharacterX <= 400) {
-    image(greenCharacterFront, greenCharacterX, greenCharacterY);
+  } else if (greenCharacterY < 200 && greenCharacterX <= 400 && x <= 5) {
+    image(greencharacterRightSideLF, greenCharacterX, greenCharacterY);
     greenCharacterX += 1;
-  } else {
-    image(greenCharacterFront, greenCharacterX, greenCharacterY);
+    x += 1;
   }
-}
+    else if(greenCharacterY < 200 && greenCharacterX <= 400 && x > 5){
+      image(greencharacterRightSideRF, greenCharacterX, greenCharacterY);
+      greenCharacterX += 1;
+      x += 1;
+    }
+
+if (x === 10) {
+      x = 0;
+    }
+  }
+  
+
+
