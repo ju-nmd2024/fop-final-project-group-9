@@ -1,113 +1,110 @@
-let characterFront;
-let characterFrontLF;
-let characterFrontRF;
-
-let characterBack;
-let characterBackLF;
-let characterBackRF;
-
-let characterSideRightLF;
-let characterSideRightRF;
-
-let characterSideLeftLF;
-let characterSideLeftRF;
-
-// checks and controls which picture is shown when mainCharacter moves
-let x = 0;
-let checkIfUp = 0;
-let checkIfDown = 0;
-
-// movement variables for mainCharacter
-let characterX = 100;
-let characterY = 100;
-
-function preload() {
-  characterFront = loadImage("/character/character-front.png");
-  characterFrontLF = loadImage("/character/character-front move.png");
-  characterFrontRF = loadImage("/character/character-front move(2).png");
-  characterBack = loadImage("/character/character-back.png");
-  characterBackLF = loadImage("/character/character-back move (2).png");
-  characterBackRF = loadImage("/character/character-back move.png");
-  characterSideRightLF = loadImage(
-    "/character/character-rightside-leftleg.png"
-  );
-  characterSideRightRF = loadImage(
-    "/character/character-rightside-rightleg.png"
-  );
-  characterSideLeftLF = loadImage("/character/character-leftside-leftleg.png");
-  characterSideLeftRF = loadImage("/character/character-leftside-rightleg.png");
-}
-
-function mainCharacter() {
-  // up and down movement, with arrow keys
-  if (keyIsDown(40) && x <= 5) {
-    image(characterFrontLF, characterX, characterY);
-    x = x + 1;
-    characterY = characterY + 2;
-    checkIfUp = 0;
-    checkIfDown = 1;
-  } else if (keyIsDown(40) && x <= 10 && x > 5) {
-    image(characterFrontRF, characterX, characterY);
-    characterY = characterY + 2;
-    x = x + 1;
-    checkIfUp = 0;
-    checkIfDown = 1;
-  } else if (keyIsDown(38) && x <= 5) {
-    image(characterBackRF, characterX, characterY);
-    x = x + 1;
-    characterY = characterY - 2;
-    checkIfUp = 1;
-    checkIfDown = 0;
-  } else if (keyIsDown(38) && x <= 10 && x > 5) {
-    image(characterBackLF, characterX, characterY);
-    characterY = characterY - 2;
-    x = x + 1;
-    checkIfUp = 1;
-    checkIfDown = 0;
-  } else if (
-    checkIfUp === 1 &&
-    keyIsDown(39) === false &&
-    keyIsDown(37) === false
-  ) {
-    image(characterBack, characterX, characterY);
-    // if the last picture shown was Up, this will be shown when stopping
-  } else if (
-    checkIfDown === 1 &&
-    keyIsDown(39) === false &&
-    keyIsDown(37) === false
-  ) {
-    image(characterFront, characterX, characterY);
-    // if the last picture shown was Down, this will be shown when stopping
+class MainCharacter {
+  constructor(characterX, characterY) {
+    this.characterX = characterX;
+    this.characterY = characterY;
+    this.counter = 0;
+    this.checkIfDown = 0;
+    this.checkIfUp = 0;
   }
 
-  // if the up and down isn't used, you can move sideways with the left & right arrow keys
-  if (keyIsDown(38) === false && keyIsDown(40) === false) {
-    if (keyIsDown(39) && x <= 5) {
-      image(characterSideRightLF, characterX, characterY);
-      x = x + 1;
-      characterX = characterX + 2;
-    } else if (keyIsDown(39) && x <= 10 && x > 5) {
-      image(characterSideRightRF, characterX, characterY);
-      characterX = characterX + 2;
-      x = x + 1;
-    } else if (keyIsDown(37) && x <= 5) {
-      image(characterSideLeftRF, characterX, characterY);
-      x = x + 1;
-      characterX = characterX - 2;
-    } else if (keyIsDown(37) && x <= 10 && x > 5) {
-      image(characterSideLeftLF, characterX, characterY);
-      characterX = characterX - 2;
-      x = x + 1;
+  preload() {
+    this.characterFront = loadImage("/character/character-front.png");
+    this.characterFrontLF = loadImage("/character/character-front move.png");
+    this.characterFrontRF = loadImage("/character/character-front move(2).png");
+    this.characterBack = loadImage("/character/character-back.png");
+    this.characterBackLF = loadImage("/character/character-back move (2).png");
+    this.characterBackRF = loadImage("/character/character-back move.png");
+    this.characterSideRightLF = loadImage(
+      "/character/character-rightside-leftleg.png"
+    );
+    this.characterSideRightRF = loadImage(
+      "/character/character-rightside-rightleg.png"
+    );
+    this.characterSideLeftLF = loadImage(
+      "/character/character-leftside-leftleg.png"
+    );
+    this.characterSideLeftRF = loadImage(
+      "/character/character-leftside-rightleg.png"
+    );
+  }
+
+  draw() {
+    // up and down movement, with arrow keys
+    if (keyIsDown(40) && this.counter <= 5) {
+      image(this.characterFrontLF, this.characterX, this.characterY);
+      this.counter += 1;
+      this.characterY += 2;
+      this.checkIfUp = 0;
+      this.checkIfDown = 1;
+    } else if (keyIsDown(40) && this.counter <= 10 && this.counter > 5) {
+      image(this.characterFrontRF, this.characterX, this.characterY);
+      this.characterY += 2;
+      this.counter += 1;
+      this.checkIfUp = 0;
+      this.checkIfDown = 1;
+    } else if (keyIsDown(38) && this.counter <= 5) {
+      image(this.characterBackRF, this.characterX, this.characterY);
+      this.counter += 1;
+      this.characterY -= 2;
+      this.checkIfUp = 1;
+      this.checkIfDown = 0;
+    } else if (keyIsDown(38) && this.counter <= 10 && this.counter > 5) {
+      image(this.characterBackLF, this.characterX, this.characterY);
+      this.characterY -= 2;
+      this.counter += 1;
+      this.checkIfUp = 1;
+      this.checkIfDown = 0;
+    } else if (
+      this.checkIfUp === 1 &&
+      keyIsDown(39) === false &&
+      keyIsDown(37) === false
+    ) {
+      image(this.characterBack, this.characterX, this.characterY);
+      // if the last picture shown was Up, this will be shown when stopping
+    } else if (
+      this.checkIfDown === 1 &&
+      keyIsDown(39) === false &&
+      keyIsDown(37) === false
+    ) {
+      image(this.characterFront, this.characterX, this.characterY);
+      // if the last picture shown was Down, this will be shown when stopping
+    }
+
+    // if the up and down isn't used, you can move sideways with the left & right arrow keys
+    if (keyIsDown(38) === false && keyIsDown(40) === false) {
+      if (keyIsDown(39) && this.counter <= 5) {
+        image(this.characterSideRightLF, this.characterX, this.characterY);
+        this.counter += 1;
+        this.characterX += 2;
+      } else if (keyIsDown(39) && this.counter <= 10 && this.counter > 5) {
+        image(this.characterSideRightRF, this.characterX, this.characterY);
+        this.characterX += 2;
+        this.counter += 1;
+      } else if (keyIsDown(37) && this.counter <= 5) {
+        image(this.characterSideLeftRF, this.characterX, this.characterY);
+        this.counter += 1;
+        this.characterX -= 2;
+      } else if (keyIsDown(37) && this.counter <= 10 && this.counter > 5) {
+        image(this.characterSideLeftLF, this.characterX, this.characterY);
+        this.characterX -= 2;
+        this.counter += 1;
+      }
+    }
+
+    // resets the value to start over with pictures
+    if (this.counter === 10) {
+      this.counter = 0;
     }
   }
-
-  // resets the value to start over with pictures
-  if (x === 10) {
-    x = 0;
-  }
 }
+
+function preload() {
+  mainCharacter.preload();
+}
+
+const mainCharacter = new MainCharacter(0, 0);
 
 function draw() {
   background(255);
-  mainCharacter();
+  mainCharacter.draw(0, 0);
 }
