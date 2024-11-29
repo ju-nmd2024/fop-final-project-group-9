@@ -12,10 +12,12 @@ let characterSideRightRF;
 let characterSideLeftLF;
 let characterSideLeftRF;
 
+// checks and controls which picture is shown when mainCharacter moves
 let x = 0;
 let checkIfUp = 0;
 let checkIfDown = 0;
 
+// movement variables for mainCharacter
 let characterX = 100;
 let characterY = 100;
 
@@ -36,9 +38,8 @@ function preload() {
   characterSideLeftRF = loadImage("/character/character-leftside-rightleg.png");
 }
 
-function draw() {
-  background(255);
-
+function mainCharacter() {
+  // up and down movement, with arrow keys
   if (keyIsDown(40) && x <= 5) {
     image(characterFrontLF, characterX, characterY);
     x = x + 1;
@@ -69,14 +70,17 @@ function draw() {
     keyIsDown(37) === false
   ) {
     image(characterBack, characterX, characterY);
+    // if the last picture shown was Up, this will be shown when stopping
   } else if (
     checkIfDown === 1 &&
     keyIsDown(39) === false &&
     keyIsDown(37) === false
   ) {
     image(characterFront, characterX, characterY);
+    // if the last picture shown was Down, this will be shown when stopping
   }
 
+  // if the up and down isn't used, you can move sideways with the left & right arrow keys
   if (keyIsDown(38) === false && keyIsDown(40) === false) {
     if (keyIsDown(39) && x <= 5) {
       image(characterSideRightLF, characterX, characterY);
@@ -97,7 +101,13 @@ function draw() {
     }
   }
 
+  // resets the value to start over with pictures
   if (x === 10) {
     x = 0;
   }
+}
+
+function draw() {
+  background(255);
+  mainCharacter();
 }
