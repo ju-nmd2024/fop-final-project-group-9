@@ -1,4 +1,4 @@
-class MainCharacter {
+export default class MainCharacter {
   constructor(characterX, characterY) {
     this.characterX = characterX;
     this.characterY = characterY;
@@ -98,13 +98,13 @@ class MainCharacter {
   }
 }
 
-function preload() {
-  mainCharacter.preload();
-}
+// function preload() {
+//   mainCharacter.preload();
+// }
 
-const mainCharacter = new MainCharacter(0, 0);
+// const mainCharacter = new MainCharacter(0, 0);
 
-function draw() {
-  background(255);
-  mainCharacter.draw(0, 0);
-}
+// function draw() {
+//   background(255);
+//   mainCharacter.draw(0, 0);
+// }

@@ -1,5 +1,7 @@
 import Interior from "./interior.js";
+import MainCharacter from "./character";
 
+const mainCharacter = new MainCharacter(0, 0);
 const newInterior = new Interior(0, 0);
 
 const gridLength = 25;
@@ -11,6 +13,13 @@ function setup() {
 }
 
 window.setup = setup;
+
+function preload() {
+  newInterior.preload();
+  mainCharacter.preload();
+}
+
+window.preload = preload();
 
 function drawGrid() {
   push();
@@ -62,27 +71,34 @@ class Button {
 const myButton = new Button(500, 200, 250, 100, "START");
 const rulesButton = new Button(550, 450, 150, 70, "Rules");
 
+function startScreen() {
+  background(204, 230, 255, 200);
+  myButton.draw();
+  rulesButton.draw();
+}
+
 let state = "start";
 
 function draw() {
-  background(204, 230, 255, 200);
   drawGrid();
 
   if (state === "start") {
-    if (mouseIsPressed) {
-      if (myButton.hitTest(mouseX, mouseY)) {
-        state = "game";
-      } else if (rulesButton.hitTest(mouseX, mouseY)) {
-        state = "rules";
-      }
-    }
-
-    myButton.draw();
-    rulesButton.draw();
+    startScreen();
   } else if (state === "game") {
     newInterior.draw();
+    mainCharacter.draw();
   } else if (state === "rules") {
   }
 }
 
 window.draw = draw;
+
+function mousePressed() {
+  if (state === "start" && myButton.hitTest(mouseX, mouseY)) {
+    state = "game";
+  } else if (state === "start" && rulesButton.hitTest(mouseX, mouseY)) {
+    state = "rules";
+  }
+}
+
+window.mousePressed = mousePressed;
