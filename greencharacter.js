@@ -1,46 +1,66 @@
-let greenCharacterFront;
-let greenCharacterBack;
-let greenCharacterBackLF;
-let greenCharacterBackRF;
-let greenCharacterX = 100;
-let redCharacterY = 500;
-let x = 0;
-let y = 0;
+class GreenCharacter {
+  constructor(characterX, characterY) {
+    this.characterX = characterX; // X position
+    this.characterY = characterY; // Y position
+    this.counter = 0; // Animation frame counter
+  }
+
+  preload() {
+    // Load all images
+    this.characterFront = loadImage("/green character/greencharacter-front.png");
+    this.characterBack = loadImage("/green character/greencharacter-back.png");
+    this.characterBackLF = loadImage(
+      "/green character/greencharacter-back-leftleg.png"
+    );
+    this.characterBackRF = loadImage(
+      "/green character/greencharacter-back-rightleg.png"
+    );
+    this.characterRightSideLF = loadImage(
+      "/green character/greencharacter-rightside-leftleg.png"
+    );
+    this.characterRightSideRF = loadImage(
+      "/green character/greencharacter-rightside-rightleg.png"
+    );
+  }
+
+  draw() {
+    // Moving UP
+    if (this.characterY >= 200) {
+      if (this.counter <= 5) {
+        image(this.characterBackRF, this.characterX, this.characterY); // Right leg
+      } else {
+        image(this.characterBackLF, this.characterX, this.characterY); // Left leg
+      }
+      this.characterY -= 2; 
+      this.counter++;
+    }
+
+    // Moving RIGHT
+    else if (this.characterX <= 400) {
+      if (this.counter <= 5) {
+        image(this.characterRightSideLF, this.characterX, this.characterY); // Left leg
+      } else {
+        image(this.characterRightSideRF, this.characterX, this.characterY); // Right leg
+      }
+      this.characterX += 1;
+      this.counter++;
+    }
+
+    // Reset counter after every animation cycle
+    if (this.counter === 10) {
+      this.counter = 0;
+    }
+  }
+}
+
+
+const greenCharacter = new GreenCharacter(100, 500);
 
 function preload() {
-  greenCharacterFront = loadImage("/green character/greencharacter-front.png");
-  greenCharacterBack = loadImage("/green character/greencharacter-back.png");
-  greenCharacterBackLF = loadImage(
-    "/green character/greencharacter-back-leftleg.png"
-  );
-  greenCharacterBackRF = loadImage(
-    "/green character/character-back-rightleg.png"
-  );
-  greencharacterRightSideLF = loadImage("/green character/greencharacter-rightside-leftleg.png");
-  greencharacterRightSideRF = loadImage("/green character/greencharacter-rightside-rightleg.png");
+  greenCharacter.preload(); 
 }
 
 function draw() {
-  background(255);
-
-  if (redCharacterY >= 200) {
-    image(greenCharacterBack, greenCharacterX, redCharacterY);
-    redCharacterY = redCharacterY - 2;
-  } else if (redCharacterY < 200 && greenCharacterX <= 400 && x <= 5) {
-    image(greencharacterRightSideLF, greenCharacterX, redCharacterY);
-    greenCharacterX += 1;
-    x += 1;
-  }
-    else if(redCharacterY < 200 && greenCharacterX <= 400 && x > 5){
-      image(greencharacterRightSideRF, greenCharacterX, redCharacterY);
-      greenCharacterX += 1;
-      x += 1;
-    }
-
-if (x === 10) {
-      x = 0;
-    }
-  }
-  
-
-
+  background(255); 
+  greenCharacter.draw(); 
+}
