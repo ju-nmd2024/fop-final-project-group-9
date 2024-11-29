@@ -1,10 +1,10 @@
 import Interior from "./interior.js";
-import MainCharacter from "./character";
-import GreenCharacter from "./greencharacter";
+import MainCharacter from "./character.js";
+import GreenCharacter from "./greencharacter.js";
 
 const mainCharacter = new MainCharacter(0, 0);
 const newInterior = new Interior(0, 0);
-const greenCharacter = new GreenCharacter(0, 0);
+const greenCharacter = new GreenCharacter(100, 500);
 
 const gridLength = 25;
 const gridHeight = 13;
@@ -90,7 +90,7 @@ function draw() {
   } else if (state === "game") {
     newInterior.draw();
     mainCharacter.draw();
-
+    greenCharacter.draw();
   } else if (state === "rules") {
   }
 }

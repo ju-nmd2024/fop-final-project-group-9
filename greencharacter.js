@@ -53,8 +53,8 @@ class GreenCharacter {
   }
 }
 
-
-const greenCharacter = new GreenCharacter(100, 500);
+export default GreenCharacter;
+/*const greenCharacter = new GreenCharacter(100, 500);
 
 function preload() {
   greenCharacter.preload(); 
@@ -63,4 +63,4 @@ function preload() {
 function draw() {
   background(255); 
   greenCharacter.draw(); 
-}
+}*/
