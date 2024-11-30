@@ -4,7 +4,6 @@ import MainCharacter from "./character.js";
 const mainCharacter = new MainCharacter(0, 0);
 const newInterior = new Interior(0, 0);
 
-
 const gridLength = 25;
 const gridHeight = 13;
 const gridSize = 50;
@@ -18,7 +17,6 @@ window.setup = setup;
 function preload() {
   newInterior.preload();
   mainCharacter.preload();
-
 }
 
 window.preload = preload();

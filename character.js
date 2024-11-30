@@ -36,7 +36,7 @@ export default class MainCharacter {
       this.characterY += 2;
       this.checkIfUp = 0;
       this.checkIfDown = 1;
-    } else if (keyIsDown(40) && this.counter <= 10 && this.counter > 5) {
+    } else if (keyIsDown(40) && this.counter > 5) {
       image(this.characterFrontRF, this.characterX, this.characterY);
       this.characterY += 2;
       this.counter += 1;
@@ -48,7 +48,7 @@ export default class MainCharacter {
       this.characterY -= 2;
       this.checkIfUp = 1;
       this.checkIfDown = 0;
-    } else if (keyIsDown(38) && this.counter <= 10 && this.counter > 5) {
+    } else if (keyIsDown(38) && this.counter > 5) {
       image(this.characterBackLF, this.characterX, this.characterY);
       this.characterY -= 2;
       this.counter += 1;
@@ -76,7 +76,7 @@ export default class MainCharacter {
         image(this.characterSideRightLF, this.characterX, this.characterY);
         this.counter += 1;
         this.characterX += 2;
-      } else if (keyIsDown(39) && this.counter <= 10 && this.counter > 5) {
+      } else if (keyIsDown(39) && this.counter > 5) {
         image(this.characterSideRightRF, this.characterX, this.characterY);
         this.characterX += 2;
         this.counter += 1;
@@ -84,7 +84,7 @@ export default class MainCharacter {
         image(this.characterSideLeftRF, this.characterX, this.characterY);
         this.counter += 1;
         this.characterX -= 2;
-      } else if (keyIsDown(37) && this.counter <= 10 && this.counter > 5) {
+      } else if (keyIsDown(37) && this.counter > 5) {
         image(this.characterSideLeftLF, this.characterX, this.characterY);
         this.characterX -= 2;
         this.counter += 1;
