@@ -1,8 +1,10 @@
 import Interior from "./interior.js";
 import MainCharacter from "./character.js";
+import Food from "./food.js";
 
 const mainCharacter = new MainCharacter(0, 0);
 const newInterior = new Interior(0, 0);
+const food = new Food(0, 0, mainCharacter.foodState);
 
 const gridLength = 25;
 const gridHeight = 13;
@@ -17,6 +19,7 @@ window.setup = setup;
 function preload() {
   newInterior.preload();
   mainCharacter.preload();
+  food.preload();
 }
 
 window.preload = preload();
@@ -71,6 +74,12 @@ class Button {
 const myButton = new Button(500, 200, 250, 100, "START");
 const rulesButton = new Button(550, 450, 150, 70, "Rules");
 
+function keyTyped() {
+  mainCharacter.keyTyped();
+}
+
+window.keyTyped = keyTyped;
+
 function startScreen() {
   background(204, 230, 255, 200);
   myButton.draw();
@@ -87,6 +96,10 @@ function draw() {
   } else if (state === "game") {
     newInterior.draw();
     mainCharacter.draw();
+    food.draw(0, 0);
+    food.type = mainCharacter.foodState;
+    food.foodX = mainCharacter.characterX + 65;
+    food.foodY = mainCharacter.characterY - 110;
   } else if (state === "rules") {
   }
 }

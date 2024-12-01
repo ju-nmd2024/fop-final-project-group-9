@@ -1,8 +1,4 @@
-function setup() {
-  createCanvas(1250, 650);
-}
-
-class Food {
+export default class Food {
   constructor(foodX, foodY, type) {
     this.foodX = foodX;
     this.foodY = foodY;
@@ -16,25 +12,12 @@ class Food {
   }
 
   draw() {
-    if (keyCode === 13) {
-      if (this.type === "cookie") {
-        image(this.cookie, this.foodX - 154, this.foodY - 124);
-      } else if (this.type === "steak") {
-        image(this.steak, this.foodX, this.foodY);
-      } else if (this.type === "glass") {
-        image(this.glass, this.foodX, this.foodY);
-      }
+    if (this.type === "cookie") {
+      image(this.cookie, this.foodX, this.foodY);
+    } else if (this.type === "steak") {
+      image(this.steak, this.foodX, this.foodY);
+    } else if (this.type === "glass") {
+      image(this.glass, this.foodX - 5, this.foodY);
     }
   }
-}
-
-const food = new Food(1000, 200, "cookie");
-
-function preload() {
-  food.preload();
-}
-
-function draw() {
-  background(255);
-  food.draw();
 }

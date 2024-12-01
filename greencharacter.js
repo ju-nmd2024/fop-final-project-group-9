@@ -1,13 +1,15 @@
 class GreenCharacter {
   constructor(characterX, characterY) {
-    this.characterX = characterX; 
-    this.characterY = characterY; 
-    this.counter = 0; 
+    this.characterX = characterX;
+    this.characterY = characterY;
+    this.counter = 0;
     this.targetX = 200; // The X position where the character should stop
   }
 
   preload() {
-    this.characterFront = loadImage("./green character/greencharacter-front.png");
+    this.characterFront = loadImage(
+      "./green character/greencharacter-front.png"
+    );
     this.characterBack = loadImage("./green character/greencharacter-back.png");
     this.characterBackLF = loadImage(
       "./green character/greencharacter-back-leftleg.png"
@@ -31,23 +33,23 @@ class GreenCharacter {
       } else {
         image(this.characterBackLF, this.characterX, this.characterY); // Left leg
       }
-      this.characterY -= 2; 
+      this.characterY -= 2;
       this.counter++;
     }
 
     // Moving RIGHT until it reaches the targetX
-    else if (this.characterX < this.targetX) { 
+    else if (this.characterX < this.targetX) {
       if (this.counter <= 5) {
-        image(this.characterRightSideLF, this.characterX, this.characterY); 
+        image(this.characterRightSideLF, this.characterX, this.characterY);
       } else {
-        image(this.characterRightSideRF, this.characterX, this.characterY); 
+        image(this.characterRightSideRF, this.characterX, this.characterY);
       }
       this.characterX += 1; // Move the character to the right
       this.counter++;
     } else {
       // Once the character reaches the targetX, stop and show the backside view
       if (this.counter <= 5) {
-        image(this.characterBack, this.characterX, this.characterY); 
+        image(this.characterBack, this.characterX, this.characterY);
       }
     }
 
@@ -57,7 +59,6 @@ class GreenCharacter {
     }
   }
 }
-
 
 let greenCharacter;
 

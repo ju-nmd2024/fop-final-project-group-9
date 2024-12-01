@@ -1,10 +1,11 @@
 export default class MainCharacter {
-  constructor(characterX, characterY) {
+  constructor(characterX, characterY, foodState) {
     this.characterX = characterX;
     this.characterY = characterY;
     this.counter = 0;
     this.checkIfDown = 0;
     this.checkIfUp = 0;
+    this.foodState = foodState;
   }
 
   preload() {
@@ -94,6 +95,18 @@ export default class MainCharacter {
     // resets the value to start over with pictures
     if (this.counter === 10) {
       this.counter = 0;
+    }
+  }
+
+  keyTyped() {
+    if (keyCode === 69 && this.characterY < 50 && this.characterY > 0) {
+      if (this.characterX >= 800 && this.characterX < 930) {
+        this.foodState = "cookie";
+      } else if (this.characterX > 950) {
+        this.foodState = "steak";
+      } else if (this.characterX >= 700 && this.characterX < 770) {
+        this.foodState = "glass";
+      }
     }
   }
 }
