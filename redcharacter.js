@@ -1,77 +1,91 @@
+import Food from "./food.js";
+
 export default class RedCharacter {
   constructor(characterX, characterY) {
     this.characterX = characterX;
     this.characterY = characterY;
     this.counter = 0;
-    this.targetX = 300; // The X position where the character should stop
+
+    this.firstTargetX = 350;
+    this.secondTargetX = 450;
+    this.firstTargetY = 300;
+    this.targetY = 200;
+
+    this.food = null; // Placeholder for the food object
+    this.foodRequested = false; // To track if a food request has been made
   }
 
   preload() {
-    this.characterFront = loadImage(
-      "./red character/redcharacter-front.png"
-    );
+    this.characterFront = loadImage("./red character/redcharacter-front.png");
     this.characterBack = loadImage("./red character/redcharacter-back.png");
-    this.characterBackLF = loadImage(
-      "./red character/redcharacter-back-leftleg.png"
-    );
-    this.characterBackRF = loadImage(
-      "./red character/redcharacter-back-rightleg.png"
-    );
-    this.characterRightSideLF = loadImage(
-      "./red character/redcharacter-rightside-leftleg.png"
-    );
-    this.characterRightSideRF = loadImage(
-      "./red character/redcharacter-rightside-rightleg.png"
-    );
+    this.characterBackLF = loadImage("./red character/redcharacter-back-leftleg.png");
+    this.characterBackRF = loadImage("./red character/redcharacter-back-rightleg.png");
+    this.characterRightSideLF = loadImage("./red character/redcharacter-righside-leftleg.png");
+    this.characterRightSideRF = loadImage("./red character/redcharacter-rightside-rightleg.png");
+
+    
+    this.cookie = loadImage("/food/cookie.png");
+    this.glass = loadImage("/food/glass.png");
+    this.steak = loadImage("/food/steak-14.png");
   }
 
   draw() {
-    // Moving UP
-    if (this.characterY >= 200) {
-      if (this.counter <= 5) {
-        image(this.characterBackRF, this.characterX, this.characterY); // Right leg
-      } else {
-        image(this.characterBackLF, this.characterX, this.characterY); // Left leg
-      }
+    if (this.characterY > this.firstTargetY) {
+      this.animateUp();
       this.characterY -= 2;
-      this.counter++;
-    }
-
-    // Moving RIGHT until it reaches the targetX
-    else if (this.characterX < this.targetX) {
-      if (this.counter <= 5) {
-        image(this.characterRightSideLF, this.characterX, this.characterY);
-      } else {
-        image(this.characterRightSideRF, this.characterX, this.characterY);
-      }
-      this.characterX += 1; // Move the character to the right
-      this.counter++;
+    } else if (this.characterX < this.firstTargetX) {
+      this.animateRight();
+      this.characterX += 1;
+    } else if (this.characterY > this.targetY) {
+      this.animateUp();
+      this.characterY -= 2;
+    } else if (this.characterX < this.secondTargetX) {
+      this.animateRight();
+      this.characterX += 1;
+      // Character has stopped an requested food
     } else {
-      // Once the character reaches the targetX, stop and show the backside view
-      if (this.counter <= 5) {
-        image(this.characterBack, this.characterX, this.characterY);
+      image(this.characterBack, this.characterX, this.characterY);
+
+      if (!this.foodRequested) {
+        this.requestFood();
+      }
+
+      // Display food 
+      if (this.food) {
+        this.food.draw();
       }
     }
 
-    // Reset counter after every animation cycle
     if (this.counter === 10) {
       this.counter = 0;
     }
   }
+
+  animateUp() {
+    if (this.counter <= 5) {
+      image(this.characterBackRF, this.characterX, this.characterY);
+    } else {
+      image(this.characterBackLF, this.characterX, this.characterY);
+    }
+    this.counter++;
+  }
+
+  animateRight() {
+    if (this.counter <= 5) {
+      image(this.characterRightSideLF, this.characterX, this.characterY);
+    } else {
+      image(this.characterRightSideRF, this.characterX, this.characterY);
+    }
+    this.counter++;
+  }
+
+  requestFood() {
+    const foodTypes = ["cookie", "steak", "glass"];
+    const randomType = foodTypes[Math.floor(Math.random() * foodTypes.length)];
+
+    // Instantiate a new Food object
+    this.food = new Food(this.characterX + 50, this.characterY, randomType);
+    this.food.preload();
+    this.foodRequested = true;
+  }
 }
-
-// let greenCharacter;
-
-// function preload() {
-//   greenCharacter = new GreenCharacter(100, 500);
-//   greenCharacter.preload();
-// }
-
-// function setup() {
-//   createCanvas(800, 600);
-// }
-
-// function draw() {
-//   background(255);
-//   greenCharacter.draw();
-// }

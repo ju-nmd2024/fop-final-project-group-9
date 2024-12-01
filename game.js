@@ -108,9 +108,9 @@ function draw() {
     startScreen();
   } else if (state === "game") {
     newInterior.draw();
-    redCharacter.draw();
     greenCharacter.draw();
     mainCharacter.draw();
+    redCharacter.draw();
 
     food.draw(0, 0);
     food.type = mainCharacter.foodState;
