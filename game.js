@@ -2,11 +2,13 @@ import Interior from "./interior.js";
 import MainCharacter from "./character.js";
 import Food from "./food.js";
 import GreenCharacter from "./greencharacter.js";
+import RedCharacter from "./redcharacter.js";
 
 const mainCharacter = new MainCharacter(0, 0);
 const newInterior = new Interior(0, 0);
 const food = new Food(0, 0, mainCharacter.foodState);
 const greenCharacter = new GreenCharacter(100, 500);
+const redCharacter = new RedCharacter(100, 500);
 
 const gridLength = 25;
 const gridHeight = 13;
@@ -23,6 +25,7 @@ function preload() {
   mainCharacter.preload();
   food.preload();
   greenCharacter.preload();
+  redCharacter.preload();
 }
 
 window.preload = preload();
@@ -105,6 +108,7 @@ function draw() {
     startScreen();
   } else if (state === "game") {
     newInterior.draw();
+    redCharacter.draw();
     greenCharacter.draw();
     mainCharacter.draw();
 
