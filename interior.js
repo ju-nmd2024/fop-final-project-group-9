@@ -45,16 +45,17 @@ export default class Interior {
   draw() {
     push();
     translate(this.x, this.y);
-    background(145, 146, 143);
-    noStroke();
+    background(200);
+    stroke(180, 80, 80);
+    strokeWeight(5);
     fill(200, 100, 100);
     rect(0, 0, 1250, 150);
-    fill(0);
-    rect(750, 0, 50, 500);
     image(this.fireplace, 200, 0);
     image(this.sofa, -30, 200);
     image(this.carpet, 195, 560);
     image(this.fridge, 625, 0);
+    fill(190, 90, 90);
+    rect(750, 0, 45, 500);
     image(this.stove, 975, 0);
     image(this.lamp, 250, 448);
     image(this.lamp, 50, 445);
