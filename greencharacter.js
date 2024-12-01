@@ -1,9 +1,9 @@
-class GreenCharacter {
+export default class GreenCharacter {
   constructor(characterX, characterY) {
     this.characterX = characterX;
     this.characterY = characterY;
     this.counter = 0;
-    this.targetX = 200; // The X position where the character should stop
+    this.targetX = 240; // The X position where the character should stop
   }
 
   preload() {
@@ -60,18 +60,18 @@ class GreenCharacter {
   }
 }
 
-let greenCharacter;
+// let greenCharacter;
 
-function preload() {
-  greenCharacter = new GreenCharacter(100, 500);
-  greenCharacter.preload();
-}
+// function preload() {
+//   greenCharacter = new GreenCharacter(100, 500);
+//   greenCharacter.preload();
+// }
 
-function setup() {
-  createCanvas(800, 600);
-}
+// function setup() {
+//   createCanvas(800, 600);
+// }
 
-function draw() {
-  background(255);
-  greenCharacter.draw();
-}
+// function draw() {
+//   background(255);
+//   greenCharacter.draw();
+// }

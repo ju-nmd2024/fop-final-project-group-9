@@ -1,11 +1,11 @@
 export default class MainCharacter {
-  constructor(characterX, characterY, foodState) {
+  constructor(characterX, characterY) {
     this.characterX = characterX;
     this.characterY = characterY;
     this.counter = 0;
     this.checkIfDown = 0;
     this.checkIfUp = 0;
-    this.foodState = foodState;
+    this.foodState = "none";
   }
 
   preload() {

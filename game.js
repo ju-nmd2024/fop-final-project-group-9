@@ -1,10 +1,12 @@
 import Interior from "./interior.js";
 import MainCharacter from "./character.js";
 import Food from "./food.js";
+import GreenCharacter from "./greencharacter.js";
 
 const mainCharacter = new MainCharacter(0, 0);
 const newInterior = new Interior(0, 0);
 const food = new Food(0, 0, mainCharacter.foodState);
+const greenCharacter = new GreenCharacter(100, 500);
 
 const gridLength = 25;
 const gridHeight = 13;
@@ -20,6 +22,7 @@ function preload() {
   newInterior.preload();
   mainCharacter.preload();
   food.preload();
+  greenCharacter.preload();
 }
 
 window.preload = preload();
@@ -73,6 +76,7 @@ class Button {
 
 const myButton = new Button(500, 200, 250, 100, "START");
 const rulesButton = new Button(550, 450, 150, 70, "Rules");
+const backButton = new Button(550, 450, 150, 70, "BACK");
 
 function keyTyped() {
   mainCharacter.keyTyped();
@@ -81,9 +85,15 @@ function keyTyped() {
 window.keyTyped = keyTyped;
 
 function startScreen() {
+  newInterior.draw();
   background(204, 230, 255, 200);
   myButton.draw();
   rulesButton.draw();
+}
+
+function rulesScreen() {
+  background(204, 230, 255, 200);
+  backButton.draw();
 }
 
 let state = "start";
@@ -95,12 +105,15 @@ function draw() {
     startScreen();
   } else if (state === "game") {
     newInterior.draw();
+    greenCharacter.draw();
     mainCharacter.draw();
+
     food.draw(0, 0);
     food.type = mainCharacter.foodState;
     food.foodX = mainCharacter.characterX + 65;
     food.foodY = mainCharacter.characterY - 110;
   } else if (state === "rules") {
+    rulesScreen();
   }
 }
 
@@ -111,7 +124,8 @@ function mousePressed() {
     state = "game";
   } else if (state === "start" && rulesButton.hitTest(mouseX, mouseY)) {
     state = "rules";
-  }
+  } else if (state === "rules" && backButton.hitTest(mouseX, mouseY))
+    state = "start";
 }
 
 window.mousePressed = mousePressed;
