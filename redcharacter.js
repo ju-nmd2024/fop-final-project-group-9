@@ -20,6 +20,8 @@ export default class RedCharacter {
 
   preload() {
     this.characterFront = loadImage("./red character/redcharacter-front.png");
+    this.characterFrontLF = loadImage("./red character/redcharacter-front-leftleg.png");
+    this.characterFrontRF = loadImage("./red character/redcharacter-front-rightleg.png");
     this.characterBack = loadImage("./red character/redcharacter-back.png");
     this.characterBackLF = loadImage(
       "./red character/redcharacter-back-leftleg.png"
@@ -33,19 +35,21 @@ export default class RedCharacter {
     this.characterRightSideRF = loadImage(
       "./red character/redcharacter-rightside-rightleg.png"
     );
+    this.characterLeftSideLF = loadImage("./red character/redcharacter-leftside-leftleg.png");
+    this.characterLeftSideRF = loadImage("./red character/redcharacter-leftside-rightleg.png");
   }
 
   draw() {
-    if (this.characterY > this.firstTargetY) {
+    if (this.characterY > this.firstTargetY && this.served === 0) {
       this.animateUp();
       this.characterY -= 2;
-    } else if (this.characterX < this.firstTargetX) {
+    } else if (this.characterX < this.firstTargetX && this.served === 0) {
       this.animateRight();
       this.characterX += 1;
-    } else if (this.characterY > this.targetY) {
+    } else if (this.characterY > this.targetY && this.served === 0) {
       this.animateUp();
       this.characterY -= 2;
-    } else if (this.characterX < this.secondTargetX) {
+    } else if (this.characterX < this.secondTargetX && this.served === 0) {
       this.animateRight();
       this.characterX += 1;
       // Character has stopped an requested food
@@ -55,6 +59,20 @@ export default class RedCharacter {
       if (!this.foodRequested) {
         this.requestFood();
       }
+    }
+
+    if(this.charcaterX < this.secondTargetX && this.served === 1) {
+      this.animateLeft();
+      this.characterX -= 1;
+    } else if(this.characterY > this.targetY && this.served === 1) {
+      this.animateDown();
+      this.characterY += 2;
+    } else if (this.characterX < this.firstTargetX && this.served === 1) {
+      this.animateLeft();
+      this.characterX -= 2;
+    } else if (this.characterY > this.firstTargetY && this.served === 1){
+      this.animateDown();
+      this.characterY += 1;
     }
 
     if (this.counter === 10) {
@@ -80,6 +98,23 @@ export default class RedCharacter {
     this.counter++;
   }
 
+  animateDown(){
+    if (this.counter <=5) {
+      image(this.characterFrontRF, this.characterX, this.charcaterY);
+    } else {
+      image(this.characterFrontLF, this.characterX, this.characterY)
+    }
+    this.counter++
+  }
+
+  animateLeft(){
+    if (this.counter <= 5) {
+      image(this.characterLeftSideLF, this.characterX, this.characterY);
+    } else {
+      image (this.characterLeftSideRF, this.characterX, this.characterY);
+    }
+  }
+
   requestFood() {
     this.foodTypes = ["cookie", "steak", "glass"];
     this.randomType =
@@ -88,6 +123,8 @@ export default class RedCharacter {
     this.foodRequested = true;
     this.foodNow = this.randomType;
   }
+
+  
 }
 
 // const redCharacter = new RedCharacter(100, 500);

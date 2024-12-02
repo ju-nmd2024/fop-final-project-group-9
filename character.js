@@ -58,7 +58,7 @@ export default class MainCharacter {
       this.checkIfDown = 0;
     } else if (
       this.checkIfUp === 1 &&
-      keyIsDown(39) === false &&
+      keyIsDown(68) === false &&
       keyIsDown(37) === false
     ) {
       image(this.characterBack, this.characterX, this.characterY);
@@ -74,11 +74,11 @@ export default class MainCharacter {
 
     // if the up and down isn't used, you can move sideways with the left & right arrow keys
     if (keyIsDown(38) === false && keyIsDown(40) === false) {
-      if (keyIsDown(39) && this.counter <= 5) {
+      if (keyIsDown(68) && this.counter <= 5) {
         image(this.characterSideRightLF, this.characterX, this.characterY);
         this.counter += 1;
         this.characterX += 2 * this.powerUp;
-      } else if (keyIsDown(39) && this.counter > 5) {
+      } else if (keyIsDown(68) && this.counter > 5) {
         image(this.characterSideRightRF, this.characterX, this.characterY);
         this.characterX += 2 * this.powerUp;
         this.counter += 1;

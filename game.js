@@ -170,7 +170,7 @@ class PickUp {
     ) {
       mainCharacter.foodState = "none";
       redCharacter.foodNow = "none";
-      //redCharacter.served = 1;
+      redCharacter.served = 1;
     }
   }
   greenHitTest(x, y) {
