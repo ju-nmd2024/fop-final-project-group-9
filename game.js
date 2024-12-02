@@ -15,6 +15,10 @@ const gridLength = 25;
 const gridHeight = 13;
 const gridSize = 50;
 
+let font;
+let sad;
+let happy;
+
 let timer = 0;
 let seconds = 0;
 
@@ -33,9 +37,10 @@ function preload() {
   greenCharacter.preload();
   redCharacter.preload();
   redFood.preload();
+  font = loadFont("/rainyhearts.ttf");
+  sad = loadImage("./character/sad-08.png");
+  happy = loadImage("./character/happy-08.png");
 }
-
-window.preload = preload();
 
 function drawGrid() {
   push();
@@ -60,20 +65,20 @@ class Button {
   draw() {
     push();
     translate(this.x, this.y);
-    fill(40, 108, 173);
+    fill(200, 100, 100);
     strokeWeight(5);
-    stroke(30, 72, 112);
+    stroke(160, 60, 60);
     rect(0, 0, this.width, this.height);
 
     noStroke();
     fill(255);
-    textFont("Consolas");
-    textStyle(BOLD);
+    textFont(font);
     textSize(this.height / 2);
-    textAlign(CENTER);
-    text(this.text, 0, this.height / 4, this.width);
+    textAlign(CENTER, CENTER);
+    text(this.text, 0, this.height / 2.5, this.width);
     pop();
   }
+
   hitTest(x, y) {
     return (
       x > this.x &&
@@ -85,8 +90,9 @@ class Button {
 }
 
 const myButton = new Button(500, 200, 250, 100, "START");
-const rulesButton = new Button(550, 450, 150, 70, "Rules");
+const rulesButton = new Button(550, 450, 150, 70, "RULES");
 const backButton = new Button(550, 450, 150, 70, "BACK");
+const tryAgainButton = new Button(310, 450, 170, 60, "BACK HOME");
 
 class PowerUp {
   constructor(x, y, width, height) {
@@ -198,8 +204,71 @@ function startScreen() {
 }
 
 function rulesScreen() {
-  background(204, 230, 255, 200);
+  background(255);
+  image(happy, 830, 360);
+  happy.resize(400, 0);
   backButton.draw();
+  push();
+  fill(160, 60, 60);
+  textFont(font);
+  textSize(55);
+  textAlign(CENTER, CENTER);
+  text("Chef's Frenzy", 350, 50, 550, 50);
+  textSize(40);
+  text("How to play", 350, 90, 550, 50);
+  fill(130, 30, 30);
+  textSize(30);
+  text("Control the character with the arrow keys.", 350, 145, 550, 50);
+  text(
+    "Pick up the the dishes in the kitchen by pressing E,",
+    300,
+    180,
+    650,
+    50
+  );
+  text("while you are in front of the work-stations!", 300, 205, 650, 50);
+  text("Sink = a glass of water.", 300, 240, 650, 50);
+  text("Stove = a steak.", 300, 275, 650, 50);
+  text("Kitchen Counter = a cookie.", 300, 310, 650, 50);
+  text("Then serve the customers their desired dish!", 300, 350, 650, 50);
+
+  pop();
+}
+
+function failScreen() {
+  background(255);
+  tryAgainButton.draw();
+  image(sad, 600, 0);
+  sad.resize(700, 0);
+  push();
+  textFont(font);
+  textAlign(CENTER, CENTER);
+  textSize(100);
+  text("Game Over!", 150, 100, 500, 100);
+
+  textSize(25);
+  text("You didn't serve the customers in time!", 150, 200, 500, 30);
+  //text("You served the wrong dish to a customer!", 150, 200, 500, 30);
+  text("Do you want to try again?", 150, 400, 500, 30);
+  pop();
+}
+
+function winScreen() {
+  background(255);
+  tryAgainButton.draw();
+  image(happy, 600, 0);
+  happy.resize(700, 0);
+  push();
+  textFont(font);
+  textAlign(CENTER, CENTER);
+  textSize(100);
+  text("Congratulations!", 150, 100, 500, 100);
+
+  textSize(25);
+  text("You successfully served all the customers!", 150, 200, 500, 30);
+
+  text("Do you want to play again?", 150, 400, 500, 30);
+  pop();
 }
 
 let state = "start";
@@ -249,6 +318,10 @@ function draw() {
     console.log(points);
   } else if (state === "rules") {
     rulesScreen();
+  } else if (state === "fail") {
+    failScreen();
+  } else if (state === "win") {
+    winScreen();
   }
 }
 
@@ -259,8 +332,14 @@ function mousePressed() {
     state = "game";
   } else if (state === "start" && rulesButton.hitTest(mouseX, mouseY)) {
     state = "rules";
-  } else if (state === "rules" && backButton.hitTest(mouseX, mouseY))
+  } else if (state === "rules" && backButton.hitTest(mouseX, mouseY)) {
     state = "start";
+  } else if (
+    (state === "fail" && tryAgainButton.hitTest(mouseX, mouseY)) ||
+    (state === "win" && tryAgainButton.hitTest(mouseX, mouseY))
+  ) {
+    state = "start";
+  }
 }
 
 window.mousePressed = mousePressed;
