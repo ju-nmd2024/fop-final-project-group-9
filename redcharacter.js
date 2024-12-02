@@ -1,4 +1,4 @@
-import Food from "./food.js";
+//import Food from "./food.js";
 
 export default class RedCharacter {
   constructor(characterX, characterY) {
@@ -11,6 +11,9 @@ export default class RedCharacter {
     this.firstTargetY = 300;
     this.targetY = 200;
 
+    this.served = 0;
+
+    this.foodNow = "none";
     this.food = null; // Placeholder for the food object
     this.foodRequested = false; // To track if a food request has been made
   }
@@ -30,10 +33,6 @@ export default class RedCharacter {
     this.characterRightSideRF = loadImage(
       "./red character/redcharacter-rightside-rightleg.png"
     );
-
-    this.cookie = loadImage("/food/cookie.png");
-    this.glass = loadImage("/food/glass.png");
-    this.steak = loadImage("/food/steak-14.png");
   }
 
   draw() {
@@ -55,11 +54,6 @@ export default class RedCharacter {
 
       if (!this.foodRequested) {
         this.requestFood();
-      }
-
-      // Display food
-      if (this.food) {
-        this.food.draw();
       }
     }
 
@@ -87,12 +81,28 @@ export default class RedCharacter {
   }
 
   requestFood() {
-    const foodTypes = ["cookie", "steak", "glass"];
-    const randomType = foodTypes[Math.floor(Math.random() * foodTypes.length)];
+    this.foodTypes = ["cookie", "steak", "glass"];
+    this.randomType =
+      this.foodTypes[Math.floor(Math.random() * this.foodTypes.length)];
 
-    // Instantiate a new Food object
-    this.food = new Food(this.characterX + 50, this.characterY, randomType);
-    this.food.preload();
     this.foodRequested = true;
+    this.foodNow = this.randomType;
   }
 }
+
+// const redCharacter = new RedCharacter(100, 500);
+// const redFood = new Food(0, 0, redCharacter.foodNow);
+
+// function preload() {
+//   redCharacter.preload();
+//   redFood.preload();
+// }
+
+// function draw() {
+//   background(255);
+//   redCharacter.draw();
+//   redFood.draw();
+//   redFood.type = redCharacter.foodNow;
+//   redFood.foodX = redCharacter.characterX + 60;
+//   redFood.foodY = redCharacter.characterY - 80;
+// }

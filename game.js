@@ -4,15 +4,21 @@ import Food from "./food.js";
 import GreenCharacter from "./greencharacter.js";
 import RedCharacter from "./redcharacter.js";
 
-const mainCharacter = new MainCharacter(0, 0);
+const mainCharacter = new MainCharacter(700, 250);
 const newInterior = new Interior(0, 0);
 const food = new Food(0, 0, mainCharacter.foodState);
 const greenCharacter = new GreenCharacter(100, 500);
 const redCharacter = new RedCharacter(100, 500);
+const redFood = new Food(0, 0, redCharacter.foodNow);
 
 const gridLength = 25;
 const gridHeight = 13;
 const gridSize = 50;
+
+let timer = 0;
+let seconds = 0;
+
+let points = 0;
 
 function setup() {
   createCanvas(1250, 650);
@@ -26,6 +32,7 @@ function preload() {
   food.preload();
   greenCharacter.preload();
   redCharacter.preload();
+  redFood.preload();
 }
 
 window.preload = preload();
@@ -95,7 +102,7 @@ class PowerUp {
     fill(40, 108, 173);
     strokeWeight(5);
     stroke(30, 72, 112);
-    rect(0, 0, this.width, this.height);
+    rect(0, 0, this.width, this.height, 20);
     pop();
 
     this.count();
@@ -129,6 +136,54 @@ class PowerUp {
 
 const faster = new PowerUp(300, 250, 50, 50);
 
+class PickUp {
+  constructor(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.foodCheck = "none";
+    this.served = 0;
+  }
+  draw() {
+    push();
+    translate(this.x, this.y);
+    stroke(128);
+    strokeWeight(2);
+    fill(200);
+    rect(0, 0, this.width, this.height);
+    pop();
+  }
+  redHitTest(x, y) {
+    if (
+      x > this.x &&
+      x < this.x + this.width &&
+      y > this.y &&
+      y < this.y + this.height &&
+      redCharacter.foodNow === mainCharacter.foodState
+    ) {
+      mainCharacter.foodState = "none";
+      redCharacter.foodNow = "none";
+      //redCharacter.served = 1;
+    }
+  }
+  greenHitTest(x, y) {
+    if (
+      x > this.x &&
+      x < this.x + this.width &&
+      y > this.y &&
+      y < this.y + this.height &&
+      greenCharacter.foodNow === mainCharacter.foodState
+    ) {
+      mainCharacter.foodState = "none";
+      greenCharacter.foodNow = "none";
+      //greenCharacter.served = 1;
+    }
+  }
+}
+
+const pickUp = new PickUp(550, 380, 50, 70);
+
 function keyTyped() {
   mainCharacter.keyTyped();
 }
@@ -155,10 +210,27 @@ function draw() {
   if (state === "start") {
     startScreen();
   } else if (state === "game") {
+    timer += 1;
+    if (timer === 30) {
+      seconds += 1;
+      timer = 0;
+      console.log(seconds);
+    }
+
     newInterior.draw();
+    pickUp.draw();
+    pickUp.redHitTest(
+      mainCharacter.characterX + 200,
+      mainCharacter.characterY + 180
+    );
     greenCharacter.draw();
+
+    if (seconds >= 1) {
+      redCharacter.draw();
+    }
+
     mainCharacter.draw();
-    redCharacter.draw();
+
     faster.draw();
     faster.hitTest(
       mainCharacter.characterX + 200,
@@ -169,6 +241,12 @@ function draw() {
     food.type = mainCharacter.foodState;
     food.foodX = mainCharacter.characterX + 65;
     food.foodY = mainCharacter.characterY - 110;
+
+    redFood.draw();
+    redFood.type = redCharacter.foodNow;
+    redFood.foodX = redCharacter.characterX + 60;
+    redFood.foodY = redCharacter.characterY - 70;
+    console.log(points);
   } else if (state === "rules") {
     rulesScreen();
   }

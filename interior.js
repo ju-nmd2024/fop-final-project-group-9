@@ -53,8 +53,6 @@ export default class Interior {
     rect(0, 0, 1250, 150);
     image(this.floor, 795, 200);
     image(this.floor, 1090, 200);
-    //image(this.floor, 1090, 495);
-    //image(this.floor, 795, 495);
     image(this.fireplace, 200, 0);
     image(this.sofa, -30, 200);
     image(this.carpet, 195, 560);
