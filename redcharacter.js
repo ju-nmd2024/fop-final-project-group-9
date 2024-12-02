@@ -18,12 +18,19 @@ export default class RedCharacter {
   preload() {
     this.characterFront = loadImage("./red character/redcharacter-front.png");
     this.characterBack = loadImage("./red character/redcharacter-back.png");
-    this.characterBackLF = loadImage("./red character/redcharacter-back-leftleg.png");
-    this.characterBackRF = loadImage("./red character/redcharacter-back-rightleg.png");
-    this.characterRightSideLF = loadImage("./red character/redcharacter-righside-leftleg.png");
-    this.characterRightSideRF = loadImage("./red character/redcharacter-rightside-rightleg.png");
+    this.characterBackLF = loadImage(
+      "./red character/redcharacter-back-leftleg.png"
+    );
+    this.characterBackRF = loadImage(
+      "./red character/redcharacter-back-rightleg.png"
+    );
+    this.characterRightSideLF = loadImage(
+      "./red character/redcharacter-righside-leftleg.png"
+    );
+    this.characterRightSideRF = loadImage(
+      "./red character/redcharacter-rightside-rightleg.png"
+    );
 
-    
     this.cookie = loadImage("/food/cookie.png");
     this.glass = loadImage("/food/glass.png");
     this.steak = loadImage("/food/steak-14.png");
@@ -50,7 +57,7 @@ export default class RedCharacter {
         this.requestFood();
       }
 
-      // Display food 
+      // Display food
       if (this.food) {
         this.food.draw();
       }

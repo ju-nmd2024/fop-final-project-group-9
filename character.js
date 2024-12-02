@@ -6,6 +6,7 @@ export default class MainCharacter {
     this.checkIfDown = 0;
     this.checkIfUp = 0;
     this.foodState = "none";
+    this.powerUp = 1;
   }
 
   preload() {
@@ -34,24 +35,24 @@ export default class MainCharacter {
     if (keyIsDown(40) && this.counter <= 5) {
       image(this.characterFrontLF, this.characterX, this.characterY);
       this.counter += 1;
-      this.characterY += 2;
+      this.characterY += 2 * this.powerUp;
       this.checkIfUp = 0;
       this.checkIfDown = 1;
     } else if (keyIsDown(40) && this.counter > 5) {
       image(this.characterFrontRF, this.characterX, this.characterY);
-      this.characterY += 2;
+      this.characterY += 2 * this.powerUp;
       this.counter += 1;
       this.checkIfUp = 0;
       this.checkIfDown = 1;
     } else if (keyIsDown(38) && this.counter <= 5) {
       image(this.characterBackRF, this.characterX, this.characterY);
       this.counter += 1;
-      this.characterY -= 2;
+      this.characterY -= 2 * this.powerUp;
       this.checkIfUp = 1;
       this.checkIfDown = 0;
     } else if (keyIsDown(38) && this.counter > 5) {
       image(this.characterBackLF, this.characterX, this.characterY);
-      this.characterY -= 2;
+      this.characterY -= 2 * this.powerUp;
       this.counter += 1;
       this.checkIfUp = 1;
       this.checkIfDown = 0;
@@ -76,18 +77,18 @@ export default class MainCharacter {
       if (keyIsDown(39) && this.counter <= 5) {
         image(this.characterSideRightLF, this.characterX, this.characterY);
         this.counter += 1;
-        this.characterX += 2;
+        this.characterX += 2 * this.powerUp;
       } else if (keyIsDown(39) && this.counter > 5) {
         image(this.characterSideRightRF, this.characterX, this.characterY);
-        this.characterX += 2;
+        this.characterX += 2 * this.powerUp;
         this.counter += 1;
       } else if (keyIsDown(37) && this.counter <= 5) {
         image(this.characterSideLeftRF, this.characterX, this.characterY);
         this.counter += 1;
-        this.characterX -= 2;
+        this.characterX -= 2 * this.powerUp;
       } else if (keyIsDown(37) && this.counter > 5) {
         image(this.characterSideLeftLF, this.characterX, this.characterY);
-        this.characterX -= 2;
+        this.characterX -= 2 * this.powerUp;
         this.counter += 1;
       }
     }

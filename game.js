@@ -81,6 +81,54 @@ const myButton = new Button(500, 200, 250, 100, "START");
 const rulesButton = new Button(550, 450, 150, 70, "Rules");
 const backButton = new Button(550, 450, 150, 70, "BACK");
 
+class PowerUp {
+  constructor(x, y, width, height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.counter = 0;
+  }
+  draw() {
+    push();
+    translate(this.x, this.y);
+    fill(40, 108, 173);
+    strokeWeight(5);
+    stroke(30, 72, 112);
+    rect(0, 0, this.width, this.height);
+    pop();
+
+    this.count();
+  }
+  hitTest(x, y) {
+    if (
+      x > this.x &&
+      x < this.x + this.width &&
+      y > this.y &&
+      y < this.y + this.height
+    ) {
+      mainCharacter.powerUp = 2;
+      this.counter = 0;
+      this.x = -1000;
+      this.y = -1000;
+    }
+  }
+
+  count() {
+    if (this.counter < 200) {
+      this.counter += 1;
+    } else if (this.counter >= 200) {
+      this.counter = 0;
+    }
+
+    if (mainCharacter.powerUp === 2 && this.counter > 199) {
+      mainCharacter.powerUp = 1;
+    }
+  }
+}
+
+const faster = new PowerUp(300, 250, 50, 50);
+
 function keyTyped() {
   mainCharacter.keyTyped();
 }
@@ -111,6 +159,11 @@ function draw() {
     greenCharacter.draw();
     mainCharacter.draw();
     redCharacter.draw();
+    faster.draw();
+    faster.hitTest(
+      mainCharacter.characterX + 200,
+      mainCharacter.characterY + 180
+    );
 
     food.draw(0, 0);
     food.type = mainCharacter.foodState;
