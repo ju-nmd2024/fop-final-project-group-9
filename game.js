@@ -10,6 +10,8 @@ const food = new Food(0, 0, mainCharacter.foodState);
 const greenCharacter = new GreenCharacter(100, 500);
 const redCharacter = new RedCharacter(100, 500);
 const redFood = new Food(0, 0, redCharacter.foodNow);
+const redCharacterAgain = new RedCharacter(100, 500);
+const redFoodAgain = new Food(0, 0, redCharacterAgain.characterX);
 
 const gridLength = 25;
 const gridHeight = 13;
@@ -38,11 +40,15 @@ function preload() {
   greenCharacter.preload();
   redCharacter.preload();
   redFood.preload();
+  redCharacterAgain.preload();
+  redFoodAgain.preload();
   font = loadFont("/rainyhearts.ttf");
   sad = loadImage("./character/sad-08.png");
   happy = loadImage("./character/happy-08.png");
   powerUpImage = loadImage("./graphics/powerup.png");
 }
+
+window.preload = preload;
 
 function drawGrid() {
   push();
@@ -138,7 +144,7 @@ class PowerUp {
   }
 }
 
-const faster = new PowerUp(Math.floor(Math.random() * width), 500, 50, 50);
+const faster = new PowerUp(Math.floor(Math.random() * 1250), 500, 50, 50);
 
 class PickUp {
   constructor(x, y, width, height) {
@@ -175,23 +181,110 @@ class PickUp {
       }
     }
   }
+  redAgainHitTest(x, y) {
+    if (
+      x > this.x &&
+      x < this.x + this.width &&
+      y > this.y &&
+      y < this.y + this.height &&
+      redCharacterAgain.foodNow === mainCharacter.foodState &&
+      keyCode === 69
+    ) {
+      if (keyIsPressed === true) {
+        mainCharacter.foodState = "no";
+        redCharacterAgain.foodNow = "none";
+        redCharacterAgain.served = 1;
+        points += 1;
+      }
+    }
+  }
   greenHitTest(x, y) {
     if (
       x > this.x &&
       x < this.x + this.width &&
       y > this.y &&
       y < this.y + this.height &&
-      greenCharacter.foodNow === mainCharacter.foodState
+      greenCharacter.foodNow === mainCharacter.foodState &&
+      keyCode === 69
     ) {
-      mainCharacter.foodState = "no";
-      greenCharacter.foodNow = "none";
-      points += 1;
-      //greenCharacter.served = 1;
+      if (keyIsPressed === true) {
+        mainCharacter.foodState = "no";
+        greenCharacter.foodNow = "none";
+        greenCharacter.served = 1;
+        points += 1;
+      }
+    }
+  }
+  greenAgainHitTest(x, y) {
+    if (
+      x > this.x &&
+      x < this.x + this.width &&
+      y > this.y &&
+      y < this.y + this.height &&
+      greenCharacterAgain.foodNow === mainCharacter.foodState &&
+      keyCode === 69
+    ) {
+      if (keyIsPressed === true) {
+        mainCharacter.foodState = "no";
+        greenCharacterAgain.foodNow = "none";
+        greenCharacterAgain.served = 1;
+        points += 1;
+      }
+    }
+  }
+  blueHitTest(x, y) {
+    if (
+      x > this.x &&
+      x < this.x + this.width &&
+      y > this.y &&
+      y < this.y + this.height &&
+      blueCharacter.foodNow === mainCharacter.foodState &&
+      keyCode === 69
+    ) {
+      if (keyIsPressed === true) {
+        mainCharacter.foodState = "no";
+        blueCharacter.foodNow = "none";
+        blueCharacter.served = 1;
+        points += 1;
+      }
     }
   }
 }
 
 const pickUp = new PickUp(550, 380, 50, 70);
+const pickUpReds = new PickUp(697, 380, 50, 70);
+const pickUpGreen = new PickUp(500, 380, 50, 70);
+const pickUpGreenTwo = new PickUp(355, 380, 50, 70);
+const pickUpBlue = new PickUp(140, 375, 50, 70);
+
+function pickUps() {
+  pickUp.draw();
+  pickUpReds.draw();
+  pickUpGreen.draw();
+  pickUpGreenTwo.draw();
+  pickUpBlue.draw();
+
+  pickUp.redHitTest(
+    mainCharacter.characterX + 200,
+    mainCharacter.characterY + 180
+  );
+
+  pickUp.redAgainHitTest(
+    mainCharacter.characterX + 200,
+    mainCharacter.characterY + 180
+  );
+
+  pickUpReds.redHitTest(
+    mainCharacter.characterX + 200,
+    mainCharacter.characterY + 180
+  );
+
+  pickUpReds.redAgainHitTest(
+    mainCharacter.characterX + 200,
+    mainCharacter.characterY + 180
+  );
+  //pickUpBlue.blueHitTest(x and y);
+}
 
 function keyTyped() {
   mainCharacter.keyTyped();
@@ -288,18 +381,29 @@ function draw() {
       timer = 0;
     }
 
+    //console.log(mainCharacter.characterX);
+
     newInterior.draw();
-    pickUp.draw();
-    pickUp.redHitTest(
-      mainCharacter.characterX + 200,
-      mainCharacter.characterY + 180
-    );
+
+    pickUps();
+
+    // green characters
     greenCharacter.draw();
 
-    if (seconds >= 1) {
+    // red characters conditions for leaving and entering
+    if (seconds >= 2) {
       redCharacter.draw();
     }
 
+    if (redCharacter.served === 1) {
+      redCharacterAgain.draw();
+    }
+
+    if (redCharacter.served === 0 && seconds === 40) {
+      redCharacter.served = 1;
+    }
+
+    // powerUp to move faster
     if (seconds >= 10) {
       faster.draw();
       faster.hitTest(
@@ -307,10 +411,11 @@ function draw() {
         mainCharacter.characterY + 180
       );
     }
-console.log(redCharacter.characterX);
-console.log(redCharacter.characterY);
+
+    // main character
     mainCharacter.draw();
 
+    // food for the characters, follows their movement and tracks food type
     food.draw(0, 0);
     food.type = mainCharacter.foodState;
     food.foodX = mainCharacter.characterX + 65;
@@ -320,6 +425,11 @@ console.log(redCharacter.characterY);
     redFood.type = redCharacter.foodNow;
     redFood.foodX = redCharacter.characterX + 60;
     redFood.foodY = redCharacter.characterY - 70;
+
+    redFoodAgain.draw();
+    redFoodAgain.type = redCharacterAgain.foodNow;
+    redFoodAgain.foodX = redCharacterAgain.characterX + 60;
+    redFoodAgain.foodY = redCharacterAgain.characterY - 70;
 
     if (points === 5) {
       state = "win";

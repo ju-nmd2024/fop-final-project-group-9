@@ -19,8 +19,12 @@ export default class RedCharacter {
 
   preload() {
     this.characterFront = loadImage("./red character/redcharacter-front.png");
-    this.characterFrontLF = loadImage("./red character/redcharacter-front-leftleg.png");
-    this.characterFrontRF = loadImage("./red character/redcharacter-front-rightleg-.png");
+    this.characterFrontLF = loadImage(
+      "./red character/redcharacter-front-leftleg.png"
+    );
+    this.characterFrontRF = loadImage(
+      "./red character/redcharacter-front-rightleg-.png"
+    );
     this.characterBack = loadImage("./red character/redcharacter-back.png");
     this.characterBackLF = loadImage(
       "./red character/redcharacter-back-leftleg.png"
@@ -34,8 +38,12 @@ export default class RedCharacter {
     this.characterRightSideRF = loadImage(
       "./red character/redcharacter-rightside-rightleg.png"
     );
-    this.characterLeftSideLF = loadImage("./red character/redcharacter-leftside-leftleg.png");
-    this.characterLeftSideRF = loadImage("./red character/redcharacter-leftside-rightleg.png");
+    this.characterLeftSideLF = loadImage(
+      "./red character/redcharacter-leftside-leftleg.png"
+    );
+    this.characterLeftSideRF = loadImage(
+      "./red character/redcharacter-leftside-rightleg.png"
+    );
   }
 
   draw() {
@@ -52,7 +60,7 @@ export default class RedCharacter {
       this.animateRight();
       this.characterX += 1;
       // Character has stopped an requested food
-    } else if (this.characterX === 450 && this.served === 0){
+    } else if (this.characterX === 450 && this.served === 0) {
       image(this.characterBack, this.characterX, this.characterY);
 
       if (!this.foodRequested) {
@@ -60,16 +68,28 @@ export default class RedCharacter {
       }
     }
 
-    if(this.characterX <= 450 && this.characterX > 350 && this.served === 1) {
+    if (this.characterX <= 450 && this.characterX > 350 && this.served === 1) {
       this.animateLeft();
       this.characterX -= 1;
-    } else if(this.characterY >= 200 && this.characterY < 300 && this.served === 1) {
+    } else if (
+      this.characterY >= 200 &&
+      this.characterY < 300 &&
+      this.served === 1
+    ) {
       this.animateDown();
       this.characterY += 2;
-    } else if (this.characterX <= 350 && this.characterX > 100 && this.served === 1) {
+    } else if (
+      this.characterX <= 350 &&
+      this.characterX > 100 &&
+      this.served === 1
+    ) {
       this.animateLeft();
       this.characterX -= 2;
-    } else if (this.characterY >= 300 && this.characterY < 700 && this.served === 1){
+    } else if (
+      this.characterY >= 300 &&
+      this.characterY < 700 &&
+      this.served === 1
+    ) {
       this.animateDown();
       this.characterY += 1;
     }
@@ -97,8 +117,8 @@ export default class RedCharacter {
     this.counter++;
   }
 
-  animateDown(){
-    if (this.counter <=5) {
+  animateDown() {
+    if (this.counter <= 5) {
       image(this.characterFrontRF, this.characterX, this.characterY);
     } else {
       image(this.characterFrontLF, this.characterX, this.characterY);
@@ -106,11 +126,11 @@ export default class RedCharacter {
     this.counter++;
   }
 
-  animateLeft(){
+  animateLeft() {
     if (this.counter <= 5) {
       image(this.characterLeftSideLF, this.characterX, this.characterY);
     } else {
-      image (this.characterLeftSideRF, this.characterX, this.characterY);
+      image(this.characterLeftSideRF, this.characterX, this.characterY);
     }
     this.counter++;
   }
@@ -123,8 +143,6 @@ export default class RedCharacter {
     this.foodRequested = true;
     this.foodNow = this.randomType;
   }
-
-  
 }
 
 // const redCharacter = new RedCharacter(100, 500);
