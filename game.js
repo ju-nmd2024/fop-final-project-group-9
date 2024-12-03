@@ -15,14 +15,15 @@ const gridLength = 25;
 const gridHeight = 13;
 const gridSize = 50;
 
+let points = 0;
+
 let font;
 let sad;
 let happy;
+let powerUpImage;
 
 let timer = 0;
 let seconds = 0;
-
-let points = 0;
 
 function setup() {
   createCanvas(1250, 650);
@@ -40,6 +41,7 @@ function preload() {
   font = loadFont("/rainyhearts.ttf");
   sad = loadImage("./character/sad-08.png");
   happy = loadImage("./character/happy-08.png");
+  powerUpImage = loadImage("./graphics/powerup.png");
 }
 
 function drawGrid() {
@@ -105,13 +107,9 @@ class PowerUp {
   draw() {
     push();
     translate(this.x, this.y);
-    fill(40, 108, 173);
-    strokeWeight(5);
-    stroke(30, 72, 112);
-    rect(0, 0, this.width, this.height, 20);
-    pop();
-
+    image(powerUpImage, 0, 0);
     this.count();
+    pop();
   }
   hitTest(x, y) {
     if (
@@ -140,7 +138,7 @@ class PowerUp {
   }
 }
 
-const faster = new PowerUp(300, 250, 50, 50);
+const faster = new PowerUp(Math.floor(Math.random() * width), 500, 50, 50);
 
 class PickUp {
   constructor(x, y, width, height) {
@@ -166,11 +164,15 @@ class PickUp {
       x < this.x + this.width &&
       y > this.y &&
       y < this.y + this.height &&
-      redCharacter.foodNow === mainCharacter.foodState
+      redCharacter.foodNow === mainCharacter.foodState &&
+      keyCode === 69
     ) {
-      mainCharacter.foodState = "none";
-      redCharacter.foodNow = "none";
-      redCharacter.served = 1;
+      if (keyIsPressed === true) {
+        mainCharacter.foodState = "no";
+        redCharacter.foodNow = "none";
+        redCharacter.served = 1;
+        points += 1;
+      }
     }
   }
   greenHitTest(x, y) {
@@ -181,8 +183,9 @@ class PickUp {
       y < this.y + this.height &&
       greenCharacter.foodNow === mainCharacter.foodState
     ) {
-      mainCharacter.foodState = "none";
+      mainCharacter.foodState = "no";
       greenCharacter.foodNow = "none";
+      points += 1;
       //greenCharacter.served = 1;
     }
   }
@@ -283,9 +286,9 @@ function draw() {
     if (timer === 30) {
       seconds += 1;
       timer = 0;
-      console.log(seconds);
     }
 
+    console.log(points);
     newInterior.draw();
     pickUp.draw();
     pickUp.redHitTest(
@@ -298,13 +301,15 @@ function draw() {
       redCharacter.draw();
     }
 
-    mainCharacter.draw();
+    if (seconds >= 10) {
+      faster.draw();
+      faster.hitTest(
+        mainCharacter.characterX + 200,
+        mainCharacter.characterY + 180
+      );
+    }
 
-    faster.draw();
-    faster.hitTest(
-      mainCharacter.characterX + 200,
-      mainCharacter.characterY + 180
-    );
+    mainCharacter.draw();
 
     food.draw(0, 0);
     food.type = mainCharacter.foodState;
@@ -315,7 +320,10 @@ function draw() {
     redFood.type = redCharacter.foodNow;
     redFood.foodX = redCharacter.characterX + 60;
     redFood.foodY = redCharacter.characterY - 70;
-    console.log(points);
+
+    if (points === 5) {
+      state = "win";
+    }
   } else if (state === "rules") {
     rulesScreen();
   } else if (state === "fail") {

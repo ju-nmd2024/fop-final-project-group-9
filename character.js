@@ -5,7 +5,7 @@ export default class MainCharacter {
     this.counter = 0;
     this.checkIfDown = 0;
     this.checkIfUp = 0;
-    this.foodState = "none";
+    this.foodState = "no";
     this.powerUp = 1;
   }
 
