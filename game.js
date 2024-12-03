@@ -3,6 +3,7 @@ import MainCharacter from "./character.js";
 import Food from "./food.js";
 import GreenCharacter from "./greencharacter.js";
 import RedCharacter from "./redcharacter.js";
+import BlueCharacter from "./bluecharacter.js";
 
 const mainCharacter = new MainCharacter(700, 250);
 const newInterior = new Interior(0, 0);
@@ -10,8 +11,11 @@ const food = new Food(0, 0, mainCharacter.foodState);
 const greenCharacter = new GreenCharacter(100, 500);
 const redCharacter = new RedCharacter(100, 500);
 const redFood = new Food(0, 0, redCharacter.foodNow);
+const greenFood = new Food(0, 0, greenCharacter.foodNow);
 const redCharacterAgain = new RedCharacter(100, 500);
 const redFoodAgain = new Food(0, 0, redCharacterAgain.foodNow);
+const blueCharacter = new BlueCharacter (100, 500);
+const blueFood = new Food(0, 0, blueCharacter.foodNow);
 
 const gridLength = 25;
 const gridHeight = 13;
@@ -42,7 +46,10 @@ function preload() {
   mainCharacter.preload();
   food.preload();
   greenCharacter.preload();
+  greenFood.preload();
   redCharacter.preload();
+  blueCharacter.preload();
+  blueFood.preload();
   redFood.preload();
   redCharacterAgain.preload();
   redFoodAgain.preload();
@@ -296,7 +303,17 @@ function pickUps() {
     mainCharacter.characterX + 200,
     mainCharacter.characterY + 200
   );
-  //pickUpBlue.blueHitTest(x and y);
+  
+  pickUpBlue.blueHitTest(
+    mainCharacter.characterX + 200,
+    mainCharacter.characterY + 200
+  );
+
+  pickUp.greenHitTest(
+    mainCharacter.characterX + 200,
+    mainCharacter.characterY + 200
+  );
+    
 }
 
 function keyTyped() {
@@ -398,8 +415,8 @@ function draw() {
       timer = 0;
     }
 
-    // console.log(mainCharacter.characterX);
-    // console.log(mainCharacter.characterY);
+    //console.log(greenCharacter.characterX);
+    //console.log(greenCharacter.characterY);
 
     newInterior.draw();
 
@@ -420,6 +437,10 @@ function draw() {
     if (redCharacter.served === 0 && seconds === 40) {
       redCharacter.served = 1;
       state = "fail";
+    }
+
+    if (seconds >= 4) {
+      blueCharacter.draw();
     }
 
     // powerUp to move faster
@@ -449,6 +470,16 @@ function draw() {
     redFoodAgain.type = redCharacterAgain.foodNow;
     redFoodAgain.foodX = redCharacterAgain.characterX + 60;
     redFoodAgain.foodY = redCharacterAgain.characterY - 70;
+
+    blueFood.draw();
+    blueFood.type = blueCharacter.foodNow;
+    blueFood.foodX = blueCharacter.characterX + 60;
+    blueFood.foodY = blueCharacter.characterY -70;
+
+    greenFood.draw();
+    greenFood.type = greenCharacter.foodNow;
+    greenFood.foodX = greenCharacter.characterX + 60;
+    greenFood.foodY = greenCharacter.characterY -70;
 
     if (points === 5) {
       state = "win";
