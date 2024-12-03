@@ -12,7 +12,6 @@ export default class RedCharacter {
     this.targetY = 200;
 
     this.served = 0;
-
     this.foodNow = "none";
     this.food = null; // Placeholder for the food object
     this.foodRequested = false; // To track if a food request has been made
@@ -21,7 +20,7 @@ export default class RedCharacter {
   preload() {
     this.characterFront = loadImage("./red character/redcharacter-front.png");
     this.characterFrontLF = loadImage("./red character/redcharacter-front-leftleg.png");
-    this.characterFrontRF = loadImage("./red character/redcharacter-front-rightleg.png");
+    this.characterFrontRF = loadImage("./red character/redcharacter-front-rightleg-.png");
     this.characterBack = loadImage("./red character/redcharacter-back.png");
     this.characterBackLF = loadImage(
       "./red character/redcharacter-back-leftleg.png"
@@ -53,7 +52,7 @@ export default class RedCharacter {
       this.animateRight();
       this.characterX += 1;
       // Character has stopped an requested food
-    } else {
+    } else if (this.characterX === 450 && this.served === 0){
       image(this.characterBack, this.characterX, this.characterY);
 
       if (!this.foodRequested) {
@@ -61,16 +60,16 @@ export default class RedCharacter {
       }
     }
 
-    if(this.charcaterX < this.secondTargetX && this.served === 1) {
+    if(this.characterX <= 450 && this.characterX > 350 && this.served === 1) {
       this.animateLeft();
       this.characterX -= 1;
-    } else if(this.characterY > this.targetY && this.served === 1) {
+    } else if(this.characterY >= 200 && this.characterY < 300 && this.served === 1) {
       this.animateDown();
       this.characterY += 2;
-    } else if (this.characterX < this.firstTargetX && this.served === 1) {
+    } else if (this.characterX <= 350 && this.characterX > 100 && this.served === 1) {
       this.animateLeft();
       this.characterX -= 2;
-    } else if (this.characterY > this.firstTargetY && this.served === 1){
+    } else if (this.characterY >= 300 && this.characterY < 700 && this.served === 1){
       this.animateDown();
       this.characterY += 1;
     }
@@ -100,11 +99,11 @@ export default class RedCharacter {
 
   animateDown(){
     if (this.counter <=5) {
-      image(this.characterFrontRF, this.characterX, this.charcaterY);
+      image(this.characterFrontRF, this.characterX, this.characterY);
     } else {
-      image(this.characterFrontLF, this.characterX, this.characterY)
+      image(this.characterFrontLF, this.characterX, this.characterY);
     }
-    this.counter++
+    this.counter++;
   }
 
   animateLeft(){
@@ -113,6 +112,7 @@ export default class RedCharacter {
     } else {
       image (this.characterLeftSideRF, this.characterX, this.characterY);
     }
+    this.counter++;
   }
 
   requestFood() {

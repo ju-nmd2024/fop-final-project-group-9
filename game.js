@@ -288,7 +288,6 @@ function draw() {
       timer = 0;
     }
 
-    console.log(points);
     newInterior.draw();
     pickUp.draw();
     pickUp.redHitTest(
@@ -308,7 +307,8 @@ function draw() {
         mainCharacter.characterY + 180
       );
     }
-
+console.log(redCharacter.characterX);
+console.log(redCharacter.characterY);
     mainCharacter.draw();
 
     food.draw(0, 0);
