@@ -3,7 +3,7 @@ export default class MainCharacter {
     this.characterX = characterX;
     this.characterY = characterY;
     this.counter = 0;
-    this.checkIfDown = 0;
+    this.checkIfDown = 1;
     this.checkIfUp = 0;
     this.foodState = "no";
     this.powerUp = 1;
@@ -109,6 +109,15 @@ export default class MainCharacter {
         this.foodState = "glass";
       }
     }
+  }
+  resetting() {
+    this.characterX = 700;
+    this.characterY = 250;
+    this.counter = 0;
+    this.checkIfDown = 1;
+    this.checkIfUp = 0;
+    this.foodState = "no";
+    this.powerUp = 1;
   }
 }
 

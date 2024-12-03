@@ -27,6 +27,10 @@ let powerUpImage;
 let timer = 0;
 let seconds = 0;
 
+// to change the text on failScreen
+let wrong = 0;
+let wrongFood = boolean(wrong);
+
 function setup() {
   createCanvas(1250, 650);
 }
@@ -144,7 +148,7 @@ class PowerUp {
   }
 }
 
-const faster = new PowerUp(Math.floor(Math.random() * 1250), 500, 50, 50);
+const faster = new PowerUp(Math.floor(Math.random() * 1200), 500, 50, 50);
 
 class PickUp {
   constructor(x, y, width, height) {
@@ -170,14 +174,16 @@ class PickUp {
       x < this.x + this.width &&
       y > this.y &&
       y < this.y + this.height &&
-      redCharacter.foodNow === mainCharacter.foodState &&
       keyCode === 69
     ) {
-      if (keyIsPressed === true) {
+      if (redCharacter.foodNow === mainCharacter.foodState) {
         mainCharacter.foodState = "no";
         redCharacter.foodNow = "none";
         redCharacter.served = 1;
         points += 1;
+      } else if (redCharacter.served === 0) {
+        state = "fail";
+        wrongFood = true;
       }
     }
   }
@@ -187,14 +193,16 @@ class PickUp {
       x < this.x + this.width &&
       y > this.y &&
       y < this.y + this.height &&
-      redCharacterAgain.foodNow === mainCharacter.foodState &&
       keyCode === 69
     ) {
-      if (keyIsPressed === true) {
+      if (redCharacterAgain.foodNow === mainCharacter.foodState) {
         mainCharacter.foodState = "no";
         redCharacterAgain.foodNow = "none";
         redCharacterAgain.served = 1;
         points += 1;
+      } else if (redCharacterAgain.served === 0) {
+        state = "fail";
+        wrongFood = true;
       }
     }
   }
@@ -204,14 +212,16 @@ class PickUp {
       x < this.x + this.width &&
       y > this.y &&
       y < this.y + this.height &&
-      greenCharacter.foodNow === mainCharacter.foodState &&
       keyCode === 69
     ) {
-      if (keyIsPressed === true) {
+      if (greenCharacter.foodNow === mainCharacter.foodState) {
         mainCharacter.foodState = "no";
         greenCharacter.foodNow = "none";
         greenCharacter.served = 1;
         points += 1;
+      } else if (greenCharacter.served === 0) {
+        state = "fail";
+        wrongFood = true;
       }
     }
   }
@@ -221,14 +231,16 @@ class PickUp {
       x < this.x + this.width &&
       y > this.y &&
       y < this.y + this.height &&
-      greenCharacterAgain.foodNow === mainCharacter.foodState &&
       keyCode === 69
     ) {
-      if (keyIsPressed === true) {
+      if (greenCharacterAgain.foodNow === mainCharacter.foodState) {
         mainCharacter.foodState = "no";
         greenCharacterAgain.foodNow = "none";
         greenCharacterAgain.served = 1;
         points += 1;
+      } else if (greenCharacterAgain.served === 0) {
+        state = "fail";
+        wrongFood = true;
       }
     }
   }
@@ -238,14 +250,16 @@ class PickUp {
       x < this.x + this.width &&
       y > this.y &&
       y < this.y + this.height &&
-      blueCharacter.foodNow === mainCharacter.foodState &&
       keyCode === 69
     ) {
-      if (keyIsPressed === true) {
+      if (blueCharacter.foodNow === mainCharacter.foodState) {
         mainCharacter.foodState = "no";
         blueCharacter.foodNow = "none";
         blueCharacter.served = 1;
         points += 1;
+      } else if (blueCharacter.served === 0) {
+        state = "fail";
+        wrongFood = true;
       }
     }
   }
@@ -266,22 +280,22 @@ function pickUps() {
 
   pickUp.redHitTest(
     mainCharacter.characterX + 200,
-    mainCharacter.characterY + 180
+    mainCharacter.characterY + 200
   );
 
   pickUp.redAgainHitTest(
     mainCharacter.characterX + 200,
-    mainCharacter.characterY + 180
+    mainCharacter.characterY + 200
   );
 
   pickUpReds.redHitTest(
     mainCharacter.characterX + 200,
-    mainCharacter.characterY + 180
+    mainCharacter.characterY + 200
   );
 
   pickUpReds.redAgainHitTest(
     mainCharacter.characterX + 200,
-    mainCharacter.characterY + 180
+    mainCharacter.characterY + 200
   );
   //pickUpBlue.blueHitTest(x and y);
 }
@@ -331,7 +345,7 @@ function rulesScreen() {
   pop();
 }
 
-function failScreen() {
+function failScreen(wrong) {
   background(255);
   tryAgainButton.draw();
   image(sad, 600, 0);
@@ -343,8 +357,12 @@ function failScreen() {
   text("Game Over!", 150, 100, 500, 100);
 
   textSize(25);
-  text("You didn't serve the customers in time!", 150, 200, 500, 30);
-  //text("You served the wrong dish to a customer!", 150, 200, 500, 30);
+  if (wrong) {
+    text("You served the wrong dish to a customer!", 150, 200, 500, 30);
+  } else {
+    text("You didn't serve the customers in time!", 150, 200, 500, 30);
+  }
+
   text("Do you want to try again?", 150, 400, 500, 30);
   pop();
 }
@@ -381,7 +399,8 @@ function draw() {
       timer = 0;
     }
 
-    //console.log(mainCharacter.characterX);
+    // console.log(mainCharacter.characterX);
+    // console.log(mainCharacter.characterY);
 
     newInterior.draw();
 
@@ -401,6 +420,7 @@ function draw() {
 
     if (redCharacter.served === 0 && seconds === 40) {
       redCharacter.served = 1;
+      state = "fail";
     }
 
     // powerUp to move faster
@@ -437,7 +457,8 @@ function draw() {
   } else if (state === "rules") {
     rulesScreen();
   } else if (state === "fail") {
-    failScreen();
+    failScreen(wrongFood);
+    seconds = 0;
   } else if (state === "win") {
     winScreen();
   }
@@ -457,6 +478,7 @@ function mousePressed() {
     (state === "win" && tryAgainButton.hitTest(mouseX, mouseY))
   ) {
     state = "start";
+    mainCharacter.resetting();
   }
 }
 
