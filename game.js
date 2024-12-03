@@ -11,7 +11,7 @@ const greenCharacter = new GreenCharacter(100, 500);
 const redCharacter = new RedCharacter(100, 500);
 const redFood = new Food(0, 0, redCharacter.foodNow);
 const redCharacterAgain = new RedCharacter(100, 500);
-const redFoodAgain = new Food(0, 0, redCharacterAgain.characterX);
+const redFoodAgain = new Food(0, 0, redCharacterAgain.foodNow);
 
 const gridLength = 25;
 const gridHeight = 13;
@@ -156,7 +156,6 @@ class PickUp {
     this.y = y;
     this.width = width;
     this.height = height;
-    this.foodCheck = "none";
     this.served = 0;
   }
   draw() {
