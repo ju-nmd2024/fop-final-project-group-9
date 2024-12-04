@@ -33,7 +33,7 @@ export default class BlueCharacter {
     } else if (this.characterX <= this.targetX && this.served === 0){
         this.animateLeft();
         this.characterX -=2;
-    } else if (this.characterX === 0 && this.served === 0) {
+    } else if (this.characterX === -80 && this.served === 0) {
         image (this.characterBack, this.characterX, this.characterY);
 
       if (!this.foodRequested) {

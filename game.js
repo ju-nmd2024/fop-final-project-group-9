@@ -4,6 +4,7 @@ import Food from "./food.js";
 import GreenCharacter from "./greencharacter.js";
 import RedCharacter from "./redcharacter.js";
 import BlueCharacter from "./bluecharacter.js";
+import SecondRedCharacter from "./secondredcharacter.js";
 
 const mainCharacter = new MainCharacter(700, 250);
 const newInterior = new Interior(0, 0);
@@ -16,6 +17,8 @@ const redCharacterAgain = new RedCharacter(100, 500);
 const redFoodAgain = new Food(0, 0, redCharacterAgain.foodNow);
 const blueCharacter = new BlueCharacter (100, 500);
 const blueFood = new Food(0, 0, blueCharacter.foodNow);
+const secondRedCharacter = new SecondRedCharacter(100, 500);
+const secondRedFood = new Food (0, 0, secondRedCharacter.foodNow);
 
 const gridLength = 25;
 const gridHeight = 13;
@@ -53,6 +56,8 @@ function preload() {
   redFood.preload();
   redCharacterAgain.preload();
   redFoodAgain.preload();
+  secondRedCharacter.preload();
+  secondRedFood.preload();
   font = loadFont("/rainyhearts.ttf");
   sad = loadImage("./character/sad-08.png");
   happy = loadImage("./character/happy-08.png");
@@ -416,7 +421,7 @@ function draw() {
     }
 
     //console.log(greenCharacter.characterX);
-    //console.log(greenCharacter.characterY);
+    console.log(redCharacter.characterY);
 
     newInterior.draw();
 
@@ -428,6 +433,10 @@ function draw() {
     // red characters conditions for leaving and entering
     if (seconds >= 2) {
       redCharacter.draw();
+    }
+
+    if (seconds >= 3) {
+      secondRedCharacter.draw();
     }
 
     if (redCharacter.served === 1) {
