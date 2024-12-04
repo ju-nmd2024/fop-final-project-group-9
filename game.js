@@ -532,7 +532,6 @@ function draw() {
     rulesScreen();
   } else if (state === "fail") {
     failScreen(wrongFood);
-    seconds = 0;
   } else if (state === "win") {
     winScreen();
   }
@@ -558,6 +557,8 @@ function mousePressed() {
     greenCharacter.resetting();
     secondGreenCharacter.resetting();
     blueCharacter.resetting();
+    seconds = 0;
+    points = 0;
   }
 }
 
