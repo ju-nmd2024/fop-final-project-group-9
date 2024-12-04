@@ -33,7 +33,7 @@ export default class GreenCharacter {
       "./green character/greencharacter-back-rightleg.png"
     );
     this.characterRightSideLF = loadImage(
-      "./green character/greencharacter-righside-leftleg.png"
+      "./green character/greencharacter-rightside-leftleg.png"
     );
     this.characterRightSideRF = loadImage(
       "./green character/greencharacter-rightside-rightleg.png"

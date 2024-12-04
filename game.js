@@ -215,9 +215,9 @@ class PickUp {
   greenHitTest(x, y) {
     if (
       x > this.x &&
-      x < this.x + this.width &&
+      x < this.x + 380 &&
       y > this.y &&
-      y < this.y + this.height &&
+      y < this.y + 500 &&
       keyCode === 69
     ) {
       if (greenCharacter.foodNow === mainCharacter.foodState) {
@@ -253,9 +253,9 @@ class PickUp {
   blueHitTest(x, y) {
     if (
       x > this.x &&
-      x < this.x + this.width &&
+      x < this.x + 375 &&
       y > this.y &&
-      y < this.y + this.height &&
+      y < this.y + 140 &&
       keyCode === 69
     ) {
       if (blueCharacter.foodNow === mainCharacter.foodState) {
