@@ -114,7 +114,7 @@ class Button {
   }
 }
 
-const myButton = new Button(500, 200, 250, 100, "START");
+const myButton = new Button(500, 250, 250, 100, "START");
 const rulesButton = new Button(550, 450, 150, 70, "RULES");
 const backButton = new Button(550, 450, 150, 70, "BACK");
 const tryAgainButton = new Button(310, 450, 170, 60, "BACK HOME");
@@ -327,6 +327,15 @@ function startScreen() {
   background(204, 230, 255, 200);
   myButton.draw();
   rulesButton.draw();
+  push();
+  noStroke();
+  rect(350, 50, 550, 150, 20);
+  fill(160, 60, 60);
+  textFont(font);
+  textSize(70);
+  textAlign(CENTER, CENTER);
+  text("Chef's Frenzy", 350, 40, 550, 150);
+  pop();
 }
 
 function rulesScreen() {
@@ -361,6 +370,102 @@ function rulesScreen() {
   pop();
 }
 
+function gameScreen() {
+  push();
+  fill(130, 30, 30);
+  textSize(30);
+  textFont(font);
+  text("Number of Happy Customers:", 10, 5, 500, 100);
+  text(points, 350, 5, 100, 100);
+  text("Time:", 10, 610, 100, 100);
+  text(seconds, 90, 610, 100, 100);
+  pop();
+
+  // green characters
+  greenCharacter.draw();
+
+  if (seconds >= 30) {
+    secondGreenCharacter.draw();
+  }
+
+  if (greenCharacter.served === 0 && seconds === 60) {
+    state = "fail";
+  }
+
+  if (secondGreenCharacter.served === 0 && seconds === 90) {
+    state = "fail";
+  }
+
+  // red characters conditions for leaving and entering
+  if (seconds >= 10) {
+    redCharacter.draw();
+  }
+
+  if (redCharacter.served === 0 && seconds === 70) {
+    state = "fail";
+  }
+
+  if (redCharacter.served === 1) {
+    secondRedCharacter.draw();
+  }
+
+  if (secondRedCharacter.served === 0 && seconds === 130) {
+    state = "fail";
+  }
+
+  // blue character
+  if (seconds >= 20) {
+    blueCharacter.draw();
+  }
+
+  if (blueCharacter.served === 0 && seconds === 80) {
+    state = "fail";
+  }
+
+  // powerUp to move faster
+  if (seconds >= 10) {
+    faster.draw();
+    faster.hitTest(
+      mainCharacter.characterX + 200,
+      mainCharacter.characterY + 180
+    );
+  }
+
+  // main character
+  mainCharacter.draw();
+
+  // food for the characters, follows their movement and tracks food type
+  food.draw(0, 0);
+  food.type = mainCharacter.foodState;
+  food.foodX = mainCharacter.characterX + 65;
+  food.foodY = mainCharacter.characterY - 110;
+
+  redFood.draw();
+  redFood.type = redCharacter.foodNow;
+  redFood.foodX = redCharacter.characterX + 60;
+  redFood.foodY = redCharacter.characterY - 70;
+
+  secondRedFood.draw();
+  secondRedFood.type = secondRedCharacter.foodNow;
+  secondRedFood.foodX = secondRedCharacter.characterX + 60;
+  secondRedFood.foodY = secondRedCharacter.characterY - 70;
+
+  blueFood.draw();
+  blueFood.type = blueCharacter.foodNow;
+  blueFood.foodX = blueCharacter.characterX + 60;
+  blueFood.foodY = blueCharacter.characterY - 70;
+
+  greenFood.draw();
+  greenFood.type = greenCharacter.foodNow;
+  greenFood.foodX = greenCharacter.characterX + 60;
+  greenFood.foodY = greenCharacter.characterY - 70;
+
+  secondGreenFood.draw();
+  secondGreenFood.type = secondGreenCharacter.foodNow;
+  secondGreenFood.foodX = secondGreenCharacter.characterX + 60;
+  secondGreenFood.foodY = secondGreenCharacter.characterY - 70;
+}
+
 function failScreen(wrong) {
   background(255);
   tryAgainButton.draw();
@@ -393,10 +498,8 @@ function winScreen() {
   textAlign(CENTER, CENTER);
   textSize(100);
   text("Congratulations!", 150, 100, 500, 100);
-
   textSize(25);
   text("You successfully served all the customers!", 150, 200, 500, 30);
-
   text("Do you want to play again?", 150, 400, 500, 30);
   pop();
 }
@@ -409,87 +512,18 @@ function draw() {
   if (state === "start") {
     startScreen();
   } else if (state === "game") {
+    // timer for seconds
     timer += 1;
     if (timer === 30) {
       seconds += 1;
       timer = 0;
     }
 
-    //console.log(greenCharacter.characterX);
-    //console.log(redCharacter.characterY);
-
     newInterior.draw();
 
     pickUps();
 
-    // green characters
-    greenCharacter.draw();
-
-    // red characters conditions for leaving and entering
-    if (seconds >= 2) {
-      redCharacter.draw();
-    }
-
-    if (seconds >= 6) {
-      secondRedCharacter.draw();
-    }
-
-    // if (redCharacter.served === 0 && seconds === 40) {
-    //   redCharacter.served = 1;
-    //   state = "fail";
-    // }
-
-    if (seconds >= 4) {
-      blueCharacter.draw();
-    }
-
-    if (seconds >= 5) {
-      secondGreenCharacter.draw();
-    }
-
-
-    // powerUp to move faster
-    if (seconds >= 10) {
-      faster.draw();
-      faster.hitTest(
-        mainCharacter.characterX + 200,
-        mainCharacter.characterY + 180
-      );
-    }
-
-    // main character
-    mainCharacter.draw();
-
-    // food for the characters, follows their movement and tracks food type
-    food.draw(0, 0);
-    food.type = mainCharacter.foodState;
-    food.foodX = mainCharacter.characterX + 65;
-    food.foodY = mainCharacter.characterY - 110;
-
-    redFood.draw();
-    redFood.type = redCharacter.foodNow;
-    redFood.foodX = redCharacter.characterX + 60;
-    redFood.foodY = redCharacter.characterY - 70;
-
-    secondRedFood.draw();
-    secondRedFood.type = secondRedCharacter.foodNow;
-    secondRedFood.foodX = secondRedCharacter.characterX + 60;
-    secondRedFood.foodY = secondRedCharacter.characterY - 70;
-
-    blueFood.draw();
-    blueFood.type = blueCharacter.foodNow;
-    blueFood.foodX = blueCharacter.characterX + 60;
-    blueFood.foodY = blueCharacter.characterY - 70;
-
-    greenFood.draw();
-    greenFood.type = greenCharacter.foodNow;
-    greenFood.foodX = greenCharacter.characterX + 60;
-    greenFood.foodY = greenCharacter.characterY - 70;
-
-    secondGreenFood.draw();
-    secondGreenFood.type = secondGreenCharacter.foodNow;
-    secondGreenFood.foodX = secondGreenCharacter.characterX + 60;
-    secondGreenFood.foodY = secondGreenCharacter.characterY - 70;
+    gameScreen();
 
     if (points === 5) {
       state = "win";
@@ -519,6 +553,11 @@ function mousePressed() {
   ) {
     state = "start";
     mainCharacter.resetting();
+    redCharacter.resetting();
+    secondRedCharacter.resetting();
+    greenCharacter.resetting();
+    secondGreenCharacter.resetting();
+    blueCharacter.resetting();
   }
 }
 

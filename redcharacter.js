@@ -78,8 +78,8 @@ export default class RedCharacter {
       this.animateDown();
       this.characterY += 2;
     } else if (
-      this.characterX <= 100 &&
-      this.characterX > 150 &&
+      this.characterX <= 350 &&
+      this.characterX > 100 &&
       this.served === 1
     ) {
       this.animateLeft();
@@ -143,7 +143,7 @@ export default class RedCharacter {
     this.foodNow = this.randomType;
   }
 
-  resetting(){
+  resetting() {
     this.characterX = 100;
     this.characterY = 500;
     this.counter = 0;
