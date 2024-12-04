@@ -13,7 +13,6 @@ export default class RedCharacter {
 
     this.served = 0;
     this.foodNow = "none";
-    this.food = null; // Placeholder for the food object
     this.foodRequested = false; // To track if a food request has been made
   }
 
@@ -143,21 +142,13 @@ export default class RedCharacter {
     this.foodRequested = true;
     this.foodNow = this.randomType;
   }
+
+  resetting(){
+    this.characterX = 100;
+    this.characterY = 500;
+    this.counter = 0;
+    this.served = 0;
+    this.foodNow = "none";
+    this.foodRequested = false;
+  }
 }
-
-// const redCharacter = new RedCharacter(100, 500);
-// const redFood = new Food(0, 0, redCharacter.foodNow);
-
-// function preload() {
-//   redCharacter.preload();
-//   redFood.preload();
-// }
-
-// function draw() {
-//   background(255);
-//   redCharacter.draw();
-//   redFood.draw();
-//   redFood.type = redCharacter.foodNow;
-//   redFood.foodX = redCharacter.characterX + 60;
-//   redFood.foodY = redCharacter.characterY - 80;
-// }

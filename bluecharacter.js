@@ -9,7 +9,6 @@ export default class BlueCharacter {
   
       this.served = 0;
       this.foodNow = "none";
-      this.food = null; // Placeholder for the food object
       this.foodRequested = false; // To track if a food request has been made
     }
 
@@ -20,7 +19,7 @@ export default class BlueCharacter {
     this.characterBack = loadImage("./blue character/bluecharacter-back.png");
     this.characterBackLF = loadImage("./blue character/bluecharacter-back-leftleg.png");
     this.characterBackRF = loadImage("./blue character/bluecharacter-back-rightleg.png");
-    this.characterRightSideLF = loadImage("./blue character/bluecharacter-rightside-leftleg.png");
+    this.characterRightSideLF = loadImage("./blue character/bluecharacter-rightside-leftleg-35.png");
     this.characterRightSideRF = loadImage("./blue character/bluecharacter-rightside-rightleg.png");
     this.characterLeftSideLF = loadImage("./blue character/bluecharacter-leftleg.png");
     this.characterLeftSideRF = loadImage("./blue character/bluecharacter-leftside-rightleg.png");
@@ -30,16 +29,32 @@ export default class BlueCharacter {
     if (this.characterY > this.targetY && this.served === 0) {
       this.animateUp();
       this.characterY -=2;
-    } else if (this.characterX <= this.targetX && this.served === 0){
+    } else if (this.characterX <= this.targetX && this.characterX >= -100 && this.served === 0){
         this.animateLeft();
         this.characterX -=2;
-    } else if (this.characterX === -80 && this.served === 0) {
-        image (this.characterBack, this.characterX, this.characterY);
+    } else if (this.served === 0) {
+        image(this.characterBack, this.characterX, this.characterY);
 
       if (!this.foodRequested) {
           this.requestFood();
       }
     }
+
+    if (this.counter === 10) {
+      this.counter = 0;
+    }
+
+    if (this.characterX <= this.targetX && this.served === 1) {
+      this.animateRight();
+      this.characterX += 1;
+    } else if (
+      this.characterY >= this.targetY &&
+      this.characterY < 600 &&
+      this.served === 1
+    ) {
+      this.animateDown();
+      this.characterY += 2;
+    } 
 
     if (this.counter === 10) {
       this.counter = 0;
@@ -89,5 +104,14 @@ export default class BlueCharacter {
     
         this.foodRequested = true;
         this.foodNow = this.randomType;
+      }
+      
+  resetting(){
+        this.characterX = 100;
+        this.characterY = 500;
+        this.counter = 0;
+        this.served = 0;
+        this.foodNow = "none";
+        this.foodRequested = false;
       }
 }

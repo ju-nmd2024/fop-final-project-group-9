@@ -1,12 +1,10 @@
-
-
-export default class SecondRedCharacter {
+export default class SecondGreenCharacter {
     constructor(characterX, characterY) {
       this.characterX = characterX;
       this.characterY = characterY;
       this.counter = 0;
   
-      this.secondTargetX = 450;
+      this.secondTargetX = 250;
       this.firstTargetY = 70;
   
       this.served = 0;
@@ -15,31 +13,31 @@ export default class SecondRedCharacter {
     }
   
     preload() {
-      this.characterFront = loadImage("./red character/redcharacter-front.png");
+      this.characterFront = loadImage("./green character/greencharacter-front.png");
       this.characterFrontLF = loadImage(
-        "./red character/redcharacter-front-leftleg.png"
+        "./green character/greencharacter-front-leftleg.png"
       );
       this.characterFrontRF = loadImage(
-        "./red character/redcharacter-front-rightleg-.png"
+        "./green character/greencharacter-front-rightleg.png"
       );
-      this.characterBack = loadImage("./red character/redcharacter-back.png");
+      this.characterBack = loadImage("./green character/greencharacter-back.png");
       this.characterBackLF = loadImage(
-        "./red character/redcharacter-back-leftleg.png"
+        "./green character/greencharacter-back-leftleg.png"
       );
       this.characterBackRF = loadImage(
-        "./red character/redcharacter-back-rightleg.png"
+        "./green character/greencharacter-back-rightleg.png"
       );
       this.characterRightSideLF = loadImage(
-        "./red character/redcharacter-righside-leftleg.png"
+        "./green character/greencharacter-rightside-leftleg.png"
       );
       this.characterRightSideRF = loadImage(
-        "./red character/redcharacter-rightside-rightleg.png"
+        "./green character/greencharacter-rightside-rightleg.png"
       );
       this.characterLeftSideLF = loadImage(
-        "./red character/redcharacter-leftside-leftleg.png"
+        "./green character/greencharacter-leftside-leftleg.png"
       );
       this.characterLeftSideRF = loadImage(
-        "./red character/redcharacter-leftside-rightleg.png"
+        "./green character/greencharacter-leftside-rightleg.png"
       );
     }
   
@@ -51,7 +49,7 @@ export default class SecondRedCharacter {
         this.animateRight();
         this.characterX += 1;
         // Character has stopped an requested food
-      } else if (this.characterX === 450 && this.served === 0) {
+      } else if (this.characterX === 250 && this.served === 0) {
         image(this.characterFront, this.characterX, this.characterY);
   
         if (!this.foodRequested) {
@@ -59,7 +57,7 @@ export default class SecondRedCharacter {
         }
       }
   
-      if (this.characterX <= 450 && this.characterX > 100 && this.served === 1) {
+      if (this.characterX <= 250 && this.characterX > 100 && this.served === 1) {
         this.animateLeft();
         this.characterX -= 1;
       } else if (
@@ -120,15 +118,15 @@ export default class SecondRedCharacter {
       this.foodRequested = true;
       this.foodNow = this.randomType;
     }
-
+    
     resetting(){
-      this.characterX = 100;
-      this.characterY = 500;
-      this.counter = 0;
-      this.served = 0;
-      this.foodNow = "none";
-      this.foodRequested = false;
-    }
+        this.characterX = 100;
+        this.characterY = 500;
+        this.counter = 0;
+        this.served = 0;
+        this.foodNow = "none";
+        this.foodRequested = false;
+      }
   }
   
   
