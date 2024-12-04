@@ -13,12 +13,10 @@ const greenCharacter = new GreenCharacter(100, 500);
 const redCharacter = new RedCharacter(100, 500);
 const redFood = new Food(0, 0, redCharacter.foodNow);
 const greenFood = new Food(0, 0, greenCharacter.foodNow);
-const redCharacterAgain = new RedCharacter(100, 500);
-const redFoodAgain = new Food(0, 0, redCharacterAgain.foodNow);
-const blueCharacter = new BlueCharacter (100, 500);
+const blueCharacter = new BlueCharacter(100, 500);
 const blueFood = new Food(0, 0, blueCharacter.foodNow);
 const secondRedCharacter = new SecondRedCharacter(100, 500);
-const secondRedFood = new Food (0, 0, secondRedCharacter.foodNow);
+const secondRedFood = new Food(0, 0, secondRedCharacter.foodNow);
 
 const gridLength = 25;
 const gridHeight = 13;
@@ -54,8 +52,6 @@ function preload() {
   blueCharacter.preload();
   blueFood.preload();
   redFood.preload();
-  redCharacterAgain.preload();
-  redFoodAgain.preload();
   secondRedCharacter.preload();
   secondRedFood.preload();
   font = loadFont("/rainyhearts.ttf");
@@ -198,7 +194,7 @@ class PickUp {
       }
     }
   }
-  redAgainHitTest(x, y) {
+  redSecondHitTest(x, y) {
     if (
       x > this.x &&
       x < this.x + this.width &&
@@ -206,12 +202,12 @@ class PickUp {
       y < this.y + this.height &&
       keyCode === 69
     ) {
-      if (redCharacterAgain.foodNow === mainCharacter.foodState) {
+      if (secondRedCharacter.foodNow === mainCharacter.foodState) {
         mainCharacter.foodState = "no";
-        redCharacterAgain.foodNow = "none";
-        redCharacterAgain.served = 1;
+        secondRedCharacter.foodNow = "none";
+        secondRedCharacter.served = 1;
         points += 1;
-      } else if (redCharacterAgain.served === 0) {
+      } else if (secondRedCharacter.served === 0) {
         state = "fail";
         wrongFood = true;
       }
@@ -220,9 +216,9 @@ class PickUp {
   greenHitTest(x, y) {
     if (
       x > this.x &&
-      x < this.x + 380 &&
+      x < this.x + this.width &&
       y > this.y &&
-      y < this.y + 500 &&
+      y < this.y + this.height &&
       keyCode === 69
     ) {
       if (greenCharacter.foodNow === mainCharacter.foodState) {
@@ -258,9 +254,9 @@ class PickUp {
   blueHitTest(x, y) {
     if (
       x > this.x &&
-      x < this.x + 375 &&
+      x < this.x + this.width &&
       y > this.y &&
-      y < this.y + 140 &&
+      y < this.y + this.height &&
       keyCode === 69
     ) {
       if (blueCharacter.foodNow === mainCharacter.foodState) {
@@ -277,9 +273,9 @@ class PickUp {
 }
 
 const pickUp = new PickUp(550, 380, 50, 70);
-const pickUpReds = new PickUp(697, 380, 50, 70);
-const pickUpGreen = new PickUp(500, 380, 50, 70);
-const pickUpGreenTwo = new PickUp(355, 380, 50, 70);
+const pickUpReds = new PickUp(550, 210, 50, 70);
+const pickUpGreenTwo = new PickUp(355, 210, 50, 70);
+const pickUpGreen = new PickUp(355, 380, 50, 70);
 const pickUpBlue = new PickUp(140, 375, 50, 70);
 
 function pickUps() {
@@ -294,31 +290,20 @@ function pickUps() {
     mainCharacter.characterY + 200
   );
 
-  pickUp.redAgainHitTest(
+  pickUpReds.redSecondHitTest(
     mainCharacter.characterX + 200,
     mainCharacter.characterY + 200
   );
 
-  pickUpReds.redHitTest(
-    mainCharacter.characterX + 200,
-    mainCharacter.characterY + 200
-  );
-
-  pickUpReds.redAgainHitTest(
-    mainCharacter.characterX + 200,
-    mainCharacter.characterY + 200
-  );
-  
   pickUpBlue.blueHitTest(
     mainCharacter.characterX + 200,
     mainCharacter.characterY + 200
   );
 
-  pickUp.greenHitTest(
+  pickUpGreen.greenHitTest(
     mainCharacter.characterX + 200,
     mainCharacter.characterY + 200
   );
-    
 }
 
 function keyTyped() {
@@ -421,7 +406,7 @@ function draw() {
     }
 
     //console.log(greenCharacter.characterX);
-    console.log(redCharacter.characterY);
+    //console.log(redCharacter.characterY);
 
     newInterior.draw();
 
@@ -435,18 +420,14 @@ function draw() {
       redCharacter.draw();
     }
 
-    if (seconds >= 3) {
+    if (redCharacter.served === 1) {
       secondRedCharacter.draw();
     }
 
-    if (redCharacter.served === 1) {
-      redCharacterAgain.draw();
-    }
-
-    if (redCharacter.served === 0 && seconds === 40) {
-      redCharacter.served = 1;
-      state = "fail";
-    }
+    // if (redCharacter.served === 0 && seconds === 40) {
+    //   redCharacter.served = 1;
+    //   state = "fail";
+    // }
 
     if (seconds >= 4) {
       blueCharacter.draw();
@@ -475,20 +456,20 @@ function draw() {
     redFood.foodX = redCharacter.characterX + 60;
     redFood.foodY = redCharacter.characterY - 70;
 
-    redFoodAgain.draw();
-    redFoodAgain.type = redCharacterAgain.foodNow;
-    redFoodAgain.foodX = redCharacterAgain.characterX + 60;
-    redFoodAgain.foodY = redCharacterAgain.characterY - 70;
+    secondRedFood.draw();
+    secondRedFood.type = secondRedCharacter.foodNow;
+    secondRedFood.foodX = secondRedCharacter.characterX + 60;
+    secondRedFood.foodY = secondRedCharacter.characterY - 70;
 
     blueFood.draw();
     blueFood.type = blueCharacter.foodNow;
     blueFood.foodX = blueCharacter.characterX + 60;
-    blueFood.foodY = blueCharacter.characterY -70;
+    blueFood.foodY = blueCharacter.characterY - 70;
 
     greenFood.draw();
     greenFood.type = greenCharacter.foodNow;
     greenFood.foodX = greenCharacter.characterX + 60;
-    greenFood.foodY = greenCharacter.characterY -70;
+    greenFood.foodY = greenCharacter.characterY - 70;
 
     if (points === 5) {
       state = "win";
