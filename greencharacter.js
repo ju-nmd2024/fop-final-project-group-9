@@ -68,7 +68,7 @@ export default class GreenCharacter {
       }
     }
 
-    if (this.characterX <= 450 && this.characterX > 350 && this.served === 1) {
+    if (this.characterX <= 250 && this.characterX > 150 && this.served === 1) {
       this.animateLeft();
       this.characterX -= 1;
     } else if (

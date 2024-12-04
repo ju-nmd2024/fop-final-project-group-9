@@ -79,8 +79,8 @@ export default class RedCharacter {
       this.animateDown();
       this.characterY += 2;
     } else if (
-      this.characterX <= 350 &&
-      this.characterX > 100 &&
+      this.characterX <= 100 &&
+      this.characterX > 150 &&
       this.served === 1
     ) {
       this.animateLeft();
