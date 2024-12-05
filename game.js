@@ -7,6 +7,10 @@ import BlueCharacter from "./bluecharacter.js";
 import SecondGreenCharacter from "./secondgreencharacter.js";
 import SecondRedCharacter from "./secondredcharacter.js";
 
+const gridLength = 25;
+const gridHeight = 13;
+const gridSize = 50;
+
 const mainCharacter = new MainCharacter(700, 250);
 const newInterior = new Interior(0, 0);
 const food = new Food(0, 0, mainCharacter.foodState);
@@ -21,10 +25,6 @@ const secondRedFood = new Food(0, 0, secondRedCharacter.foodNow);
 const secondGreenCharacter = new SecondGreenCharacter(100, 500);
 const secondGreenFood = new Food(0, 0, secondGreenCharacter.foodNow);
 
-const gridLength = 25;
-const gridHeight = 13;
-const gridSize = 50;
-
 let points = 0;
 
 let font;
@@ -36,8 +36,7 @@ let timer = 0;
 let seconds = 0;
 
 // to change the text on failScreen
-let wrong = 0;
-let wrongFood = boolean(wrong);
+let wrongFood = false;
 
 function setup() {
   createCanvas(1250, 650);
@@ -375,33 +374,34 @@ function gameScreen() {
   fill(130, 30, 30);
   textSize(30);
   textFont(font);
-  text("Number of Happy Customers:", 10, 5, 500, 100);
-  text(points, 350, 5, 100, 100);
-  text("Time:", 10, 610, 100, 100);
-  text(seconds, 90, 610, 100, 100);
+  textAlign(CENTER);
+  text("Number of Happy Customers:", 10, 30, 350, 100);
+  text(points, 360, 30, 10, 30);
+  text("Time:", 10, 630, 100, 100);
+  text(seconds, 70, 630, 100, 100);
   pop();
 
   // green characters
-  greenCharacter.draw();
-
-  if (seconds >= 30) {
+  if (seconds >= 20) {
     secondGreenCharacter.draw();
   }
 
-  if (greenCharacter.served === 0 && seconds === 60) {
+  if (secondGreenCharacter.served === 0 && seconds >= 100) {
     state = "fail";
   }
 
-  if (secondGreenCharacter.served === 0 && seconds === 90) {
+  if (secondGreenCharacter.served === 1) {
+    greenCharacter.draw();
+  }
+
+  if (greenCharacter.served === 0 && seconds >= 200) {
     state = "fail";
   }
 
   // red characters conditions for leaving and entering
-  if (seconds >= 10) {
-    redCharacter.draw();
-  }
+  redCharacter.draw();
 
-  if (redCharacter.served === 0 && seconds === 70) {
+  if (redCharacter.served === 0 && seconds === 90) {
     state = "fail";
   }
 
@@ -414,11 +414,11 @@ function gameScreen() {
   }
 
   // blue character
-  if (seconds >= 20) {
+  if (seconds >= 10) {
     blueCharacter.draw();
   }
 
-  if (blueCharacter.served === 0 && seconds === 80) {
+  if (blueCharacter.served === 0 && seconds === 110) {
     state = "fail";
   }
 
@@ -514,7 +514,7 @@ function draw() {
   } else if (state === "game") {
     // timer for seconds
     timer += 1;
-    if (timer === 30) {
+    if (timer === 60) {
       seconds += 1;
       timer = 0;
     }
@@ -559,6 +559,7 @@ function mousePressed() {
     blueCharacter.resetting();
     seconds = 0;
     points = 0;
+    wrongFood = false;
   }
 }
 

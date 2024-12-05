@@ -1,25 +1,3 @@
-// const gridLength = 25;
-// const gridHeight = 13;
-// const gridSize = 50;
-
-// function setup() {
-//   createCanvas(1250, 650);
-// }
-
-// window.setup = setup;
-
-// function drawGrid() {
-//   push();
-//   stroke(255, 255, 255);
-//   noFill();
-//   for (let x = 0; x < gridLength; x++) {
-//     for (let y = 0; y < gridHeight; y++) {
-//       rect(x * gridSize, y * gridSize, gridSize, gridSize);
-//     }
-//   }
-//   pop();
-// }
-
 export default class Interior {
   constructor(x, y) {
     this.x = x;
@@ -83,18 +61,3 @@ export default class Interior {
     pop();
   }
 }
-
-// function preload() {
-//   interior.preload();
-// }
-
-// window.preload = preload;
-
-// const interior = new Interior(0, 0);
-
-// function draw() {
-//   interior.draw();
-//   drawGrid();
-// }
-
-// window.draw = draw;
