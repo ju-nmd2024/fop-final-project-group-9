@@ -1,5 +1,5 @@
-//import Food from "./food.js";
-
+// https://chatgpt.com/share/67518fbd-9cf4-800b-853e-ffa2a1a43676
+// Animate UP/Down, Right/Left (lines: 101-135), logical NOT operator (lines 65-67), request random food type (137-144) 
 export default class RedCharacter {
   constructor(characterX, characterY) {
     this.characterX = characterX;
