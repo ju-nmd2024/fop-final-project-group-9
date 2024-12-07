@@ -16,23 +16,23 @@ export default class MainCharacter {
   }
 
   preload() {
-    this.characterFront = loadImage("/character/character-front.png");
-    this.characterFrontLF = loadImage("/character/character-front move.png");
-    this.characterFrontRF = loadImage("/character/character-front move(2).png");
-    this.characterBack = loadImage("/character/character-back.png");
-    this.characterBackLF = loadImage("/character/character-back move (2).png");
-    this.characterBackRF = loadImage("/character/character-back move.png");
+    this.characterFront = loadImage("./character/character-front.png");
+    this.characterFrontLF = loadImage("./character/character-front move.png");
+    this.characterFrontRF = loadImage("./character/character-front move(2).png");
+    this.characterBack = loadImage("./character/character-back.png");
+    this.characterBackLF = loadImage("./character/character-back move (2).png");
+    this.characterBackRF = loadImage("./character/character-back move.png");
     this.characterSideRightLF = loadImage(
-      "/character/character-rightside-leftleg.png"
+      "./character/character-rightside-leftleg.png"
     );
     this.characterSideRightRF = loadImage(
-      "/character/character-rightside-rightleg.png"
+      "./character/character-rightside-rightleg.png"
     );
     this.characterSideLeftLF = loadImage(
-      "/character/character-leftside-leftleg.png"
+      "./character/character-leftside-leftleg.png"
     );
     this.characterSideLeftRF = loadImage(
-      "/character/character-leftside-rightleg.png"
+      "./character/character-leftside-rightleg.png"
     );
   }
 

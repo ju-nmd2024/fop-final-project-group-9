@@ -5,20 +5,20 @@ export default class Interior {
   }
 
   preload() {
-    this.sofa = loadImage("/graphics/big-sofa.png");
-    this.carpet = loadImage("/graphics/carpet-05.png");
-    this.fireplace = loadImage("/graphics/fireplace-04.png");
-    this.fridge = loadImage("/graphics/fridge-12.png");
-    this.stove = loadImage("/graphics/stove-13.png");
-    this.lamp = loadImage("/graphics/lamp.png");
-    this.lampFront = loadImage("/graphics/lamp2.png");
-    this.table = loadImage("/graphics/table.png");
-    this.smallSofaUp = loadImage("/graphics/small-sofa(up)-02.png");
-    this.smallSofaDown = loadImage("/graphics/small-sofa(down)-03.png");
-    this.plant = loadImage("/graphics/plant.png");
-    this.sink = loadImage("/graphics/sink-14.png");
+    this.sofa = loadImage("./graphics/big-sofa.png");
+    this.carpet = loadImage("./graphics/carpet-05.png");
+    this.fireplace = loadImage("./graphics/fireplace-04.png");
+    this.fridge = loadImage("./graphics/fridge-12.png");
+    this.stove = loadImage("./graphics/stove-13.png");
+    this.lamp = loadImage("./graphics/lamp.png");
+    this.lampFront = loadImage("./graphics/lamp2.png");
+    this.table = loadImage("./graphics/table.png");
+    this.smallSofaUp = loadImage("./graphics/small-sofa(up)-02.png");
+    this.smallSofaDown = loadImage("./graphics/small-sofa(down)-03.png");
+    this.plant = loadImage("./graphics/plant.png");
+    this.sink = loadImage("./graphics/sink-14.png");
     this.counter = loadImage("/graphics/counter-15.png");
-    this.floor = loadImage("/graphics/floor-16.png");
+    this.floor = loadImage("./graphics/floor-16.png");
   }
 
   draw() {

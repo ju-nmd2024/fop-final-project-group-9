@@ -6,9 +6,9 @@ export default class Food {
   }
 
   preload() {
-    this.cookie = loadImage("/food/cookie.png");
-    this.glass = loadImage("/food/glass.png");
-    this.steak = loadImage("/food/steak-14.png");
+    this.cookie = loadImage("./food/cookie.png");
+    this.glass = loadImage("./food/glass.png");
+    this.steak = loadImage("./food/steak-14.png");
   }
 
   draw() {
