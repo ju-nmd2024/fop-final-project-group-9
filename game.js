@@ -58,7 +58,7 @@ function preload() {
   secondRedFood.preload();
   secondGreenCharacter.preload();
   secondGreenFood.preload();
-  font = loadFont("/rainyhearts.ttf");
+  font = loadFont("./rainyhearts.ttf");
   sad = loadImage("./character/sad-08.png");
   happy = loadImage("./character/happy-08.png");
   powerUpImage = loadImage("./graphics/powerup.png");

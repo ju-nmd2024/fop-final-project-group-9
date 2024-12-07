@@ -17,7 +17,7 @@ export default class Interior {
     this.smallSofaDown = loadImage("./graphics/small-sofa(down)-03.png");
     this.plant = loadImage("./graphics/plant.png");
     this.sink = loadImage("./graphics/sink-14.png");
-    this.counter = loadImage("/graphics/counter-15.png");
+    this.counter = loadImage("./graphics/counter-15.png");
     this.floor = loadImage("./graphics/floor-16.png");
   }
 
