@@ -6,6 +6,7 @@ export default class BlueCharacter {
 
     this.targetY = 200;
     this.targetX = 100;
+    this.outside = false;
 
     this.served = 0;
     this.foodNow = "none";
@@ -74,6 +75,8 @@ export default class BlueCharacter {
     ) {
       this.animateDown();
       this.characterY += 2;
+    } else if (this.characterY === 600) {
+      this.outside = true;
     }
 
     if (this.counter === 10) {
@@ -133,5 +136,6 @@ export default class BlueCharacter {
     this.served = 0;
     this.foodNow = "none";
     this.foodRequested = false;
+    this.outside = false;
   }
 }

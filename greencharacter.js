@@ -10,6 +10,7 @@ export default class GreenCharacter {
     this.secondTargetX = 250;
     this.firstTargetY = 300;
     this.targetY = 200;
+    this.outside = false;
 
     this.served = 0;
     this.foodNow = "none";
@@ -17,7 +18,9 @@ export default class GreenCharacter {
   }
 
   preload() {
-    this.characterFront = loadImage("./green character/greencharacter-front.png");
+    this.characterFront = loadImage(
+      "./green character/greencharacter-front.png"
+    );
     this.characterFrontLF = loadImage(
       "./green character/greencharacter-front-leftleg.png"
     );
@@ -91,6 +94,8 @@ export default class GreenCharacter {
     ) {
       this.animateDown();
       this.characterY += 1;
+    } else if (this.characterY === 700) {
+      this.outside = true;
     }
 
     if (this.counter === 10) {
@@ -143,13 +148,13 @@ export default class GreenCharacter {
     this.foodNow = this.randomType;
   }
 
-  resetting(){
+  resetting() {
     this.characterX = 100;
     this.characterY = 500;
     this.counter = 0;
     this.served = 0;
     this.foodNow = "none";
     this.foodRequested = false;
+    this.outside = false;
   }
 }
-

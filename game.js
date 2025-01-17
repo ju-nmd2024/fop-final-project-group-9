@@ -25,6 +25,17 @@ const secondRedFood = new Food(0, 0, secondRedCharacter.foodNow);
 const secondGreenCharacter = new SecondGreenCharacter(100, 500);
 const secondGreenFood = new Food(0, 0, secondGreenCharacter.foodNow);
 
+let characters = [
+  greenCharacter,
+  redCharacter,
+  blueCharacter,
+  secondRedCharacter,
+  secondGreenCharacter,
+];
+
+let activeCharacters = [];
+let otherActiveCharacters = [];
+
 let points = 0;
 
 let font;
@@ -369,6 +380,11 @@ function rulesScreen() {
   pop();
 }
 
+function randomElement(array) {
+  let randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
+
 function gameScreen() {
   push();
   fill(130, 30, 30);
@@ -381,45 +397,39 @@ function gameScreen() {
   text(seconds, 70, 630, 100, 100);
   pop();
 
-  // green characters
-  if (seconds >= 20) {
-    secondGreenCharacter.draw();
+  // characters entering and leaving
+  if (characters.length > 0) {
+    while (activeCharacters.length < 1) {
+      const randomCharacter = randomElement(characters);
+      activeCharacters.push(randomCharacter);
+      let randomCharacterIndex = characters.indexOf(randomCharacter);
+      characters.splice(randomCharacterIndex, 1);
+    }
+
+    while (otherActiveCharacters.length < 1 && seconds >= 10) {
+      const randomCharacter = randomElement(characters);
+      otherActiveCharacters.push(randomCharacter);
+      let randomCharacterIndex = characters.indexOf(randomCharacter);
+      characters.splice(randomCharacterIndex, 1);
+    }
   }
 
-  if (secondGreenCharacter.served === 0 && seconds >= 100) {
-    state = "fail";
+  for (let character of activeCharacters) {
+    character.draw();
+    if (character.served === 1 && character.outside === true) {
+      activeCharacters.pop();
+    } else if (seconds >= 200) {
+      state = "fail";
+    }
   }
 
-  if (secondGreenCharacter.served === 1) {
-    greenCharacter.draw();
-  }
-
-  if (greenCharacter.served === 0 && seconds >= 200) {
-    state = "fail";
-  }
-
-  // red characters conditions for leaving and entering
-  redCharacter.draw();
-
-  if (redCharacter.served === 0 && seconds === 90) {
-    state = "fail";
-  }
-
-  if (redCharacter.served === 1) {
-    secondRedCharacter.draw();
-  }
-
-  if (secondRedCharacter.served === 0 && seconds === 130) {
-    state = "fail";
-  }
-
-  // blue character
-  if (seconds >= 10) {
-    blueCharacter.draw();
-  }
-
-  if (blueCharacter.served === 0 && seconds === 110) {
-    state = "fail";
+  for (let character of otherActiveCharacters) {
+    character.draw();
+    if (character.served === 1 && character.outside === true) {
+      otherActiveCharacters.pop();
+    } else if (seconds >= 200) {
+      state = "fail";
+    }
   }
 
   // powerUp to move faster
@@ -542,6 +552,13 @@ window.draw = draw;
 function mousePressed() {
   if (state === "start" && myButton.hitTest(mouseX, mouseY)) {
     state = "game";
+    characters = [
+      greenCharacter,
+      redCharacter,
+      blueCharacter,
+      secondRedCharacter,
+      secondGreenCharacter,
+    ];
   } else if (state === "start" && rulesButton.hitTest(mouseX, mouseY)) {
     state = "rules";
   } else if (state === "rules" && backButton.hitTest(mouseX, mouseY)) {
@@ -560,6 +577,9 @@ function mousePressed() {
     seconds = 0;
     points = 0;
     wrongFood = false;
+    characters = [];
+    activeCharacters = [];
+    otherActiveCharacters = [];
   }
 }
 

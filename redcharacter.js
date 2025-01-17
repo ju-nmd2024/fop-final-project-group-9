@@ -1,5 +1,5 @@
 // https://chatgpt.com/share/67518fbd-9cf4-800b-853e-ffa2a1a43676
-// Animate UP/Down, Right/Left (lines: 101-135), logical NOT operator (lines 65-67), request random food type (137-144) 
+// Animate UP/Down, Right/Left (lines: 101-135), logical NOT operator (lines 65-67), request random food type (137-144)
 export default class RedCharacter {
   constructor(characterX, characterY) {
     this.characterX = characterX;
@@ -10,6 +10,7 @@ export default class RedCharacter {
     this.secondTargetX = 450;
     this.firstTargetY = 300;
     this.targetY = 200;
+    this.outside = false;
 
     this.served = 0;
     this.foodNow = "none";
@@ -91,6 +92,8 @@ export default class RedCharacter {
     ) {
       this.animateDown();
       this.characterY += 1;
+    } else if (this.characterY === 700) {
+      this.outside = true;
     }
 
     if (this.counter === 10) {
@@ -150,5 +153,6 @@ export default class RedCharacter {
     this.served = 0;
     this.foodNow = "none";
     this.foodRequested = false;
+    this.outside = false;
   }
 }
